@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "threads")
-public class Thread {
+public class Thread implements Comparable<Thread> {
 
 
     private long ID;
@@ -103,5 +103,14 @@ public class Thread {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public int compareTo(Thread that) {
+        if (this.isPinned && !that.isPinned) return 1;
+        if (this.isPinned && that.isPinned) return 0;
+        if (!this.isPinned && !that.isPinned) {
+            return this.date.compareTo(that.date);
+        }
+        return -1;
     }
 }

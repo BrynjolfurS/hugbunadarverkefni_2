@@ -64,14 +64,14 @@
                 </div>
                 <div class="thread-table">
                     <div class="thread-table-head gray">
-                        <div class="post-icon"></div>
+                        <div class="post-icon">Section</div>
                         <div class="post-subject">Subject</div>
                         <div class="post-comments">Comments</div>
                         <div class="post-info">Information</div>
                     </div>
 
                     <div th:each="thread : ${threads}" class="thread-table-row" >
-                        <div class="post-icon"><i class="fa fa-cart-plus"></i></div>
+                        <div class="post-icon"><p th:text="${#strings.capitalize(thread.getSport())}"></p></div>
                         <div th:class="${thread.isPinned()}? 'post-subject-pinned' : 'post-subject'">
                             <a th:href="@{/home/{s}/thread/{t}(s=${thread.getSport()}, t=${thread.getID()})}" th:text="${thread.getHeader()}"></a>
                         </div>

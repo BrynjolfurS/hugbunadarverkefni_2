@@ -32,12 +32,12 @@
     </menu>
   </div>
 
-  
-
   <div class="content-container">
     <h1 style="text-align: center;" th:if="${events.empty}">There are no upcoming events</h1>
     <h2 style="text-align: center;" th:if="${events.empty} and ${session.LoggedInUser != null}">If you know about an upcoming event, add it by clicking 'New Event'</h2>
-    <a th:if="${session.LoggedInUser != null}" style="text-align: center;" href="./events/edit"><p>New Event</p></a>
+    <div th:if="${session.LoggedInUser} != null">
+      <a th:if="${session.LoggedInUser.isAdmin} == true" style="text-align: center;" href="./events/edit"><p>Edit Events</p></a>
+    </div>
     <td th:each="event : ${events}">
         <h3 th:text="${event.eventName}"></h3>
         <p th:text="${event.eventDescription}"></p>

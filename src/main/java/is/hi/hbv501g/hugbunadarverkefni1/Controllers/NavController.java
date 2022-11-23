@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -47,8 +49,9 @@ public class NavController {
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String goToHome(HttpSession session, Model model, User user) {
 
-        List<Thread> threads = threadService.findAllThreads();
-        model.addAttribute("threads", threads);
+        List<Thread> allThreads = threadService.findAllThreads();
+        Collections.sort(allThreads, Collections.reverseOrder());
+        model.addAttribute("threads", allThreads);
         List<String> sports = sportService.findAllSports();
         model.addAttribute("sports", sports);
         model.addAttribute("user", user);
@@ -68,8 +71,9 @@ public class NavController {
         if(!sportService.isSport(sport))
             return "redirect:/home";
 
-        model.addAttribute("threads", threadService.findAllThreadsBySport(sport));
-        model.addAttribute("sport", sport);
+        List<Thread> sportThreads = threadService.findAllThreadsBySport(sport);
+        Collections.sort(sportThreads, Collections.reverseOrder());
+        model.addAttribute("threads", sportThreads);
         model.addAttribute("sports", sportService.findAllSports());
         model.addAttribute("players", playerService.findTopPlayersBySport(sport));
         model.addAttribute("events", sportService.findAllEventsBySport(sport));
@@ -102,6 +106,8 @@ public class NavController {
             return "redirect:/home";
 
         model.addAttribute("clubs", sportService.findAllClubsBySport(sport));
+        model.addAttribute("sports", sportService.findAllSports());
+        model.addAttribute("sport", sport);
         return "clubs";
     }
 
@@ -112,6 +118,8 @@ public class NavController {
             return "redirect:/home";
 
         model.addAttribute("players", sportService.findAllPlayersBySport(sport));
+        model.addAttribute("sports", sportService.findAllSports());
+        model.addAttribute("sport", sport);
         return "players";
     }
 
@@ -122,6 +130,8 @@ public class NavController {
 
         model.addAttribute("player", new Player());
         model.addAttribute("players", sportService.findAllPlayersBySport(sport));
+        model.addAttribute("sports", sportService.findAllSports());
+        model.addAttribute("sport", sport);
         return "editPlayers";
     }
     @RequestMapping(value = "/home/{sport}/clubs/edit", method = RequestMethod.GET)
@@ -131,6 +141,8 @@ public class NavController {
 
         model.addAttribute("club", new Club());
         model.addAttribute("clubs", sportService.findAllClubsBySport(sport));
+        model.addAttribute("sports", sportService.findAllSports());
+        model.addAttribute("sport", sport);
         return "editClubs";
     }
     @RequestMapping(value = "/home/{sport}/events/edit", method = RequestMethod.GET)
@@ -140,6 +152,8 @@ public class NavController {
 
         model.addAttribute("event", new Event());
         model.addAttribute("events", sportService.findAllEventsBySport(sport));
+        model.addAttribute("sports", sportService.findAllSports());
+        model.addAttribute("sport", sport);
         return "editEvents";
     }
 
@@ -205,9 +219,9 @@ public class NavController {
             playerService.save(new Player("Dummy Player " + i, "info", 10-i, i, "badminton"));
             playerService.save(new Player("Dummy Player " + i, "info", 10-i, i, "pilukast"));
             playerService.save(new Player("Dummy Player " + i, "info", 10-i, i, "Extreme Ironing"));
-            sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "badminton"));
-            sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "pilukast"));
-            sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "Extreme Ironing"));
+            sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "badminton", LocalDate.of(2022,i+1,1+i*2)));
+            sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "pilukast", LocalDate.of(2022,i+1,1+i*2)));
+            sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "Extreme Ironing", LocalDate.of(2022,i+1,1+i*2)));
         }
         sportService.saveClub(new Club("Badmintonfélag Hafnarfjarðar", "https://www.badmintonfelag.is/", "bh@bhbadminton.is",
                 "Strandgötu 53, 220 Hafnarfirði",

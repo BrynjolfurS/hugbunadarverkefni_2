@@ -38,6 +38,10 @@
             <label>Details</label>
             <textarea cols="40" rows="5" type="textarea" name="body" maxlength="500"></textarea>
             <input type="submit" value="Submit" />
+            <div th:if="${session.LoggedInUser.isAdmin} == true" style="margin-top:10px;">
+                <label for="pinCheckbox">Pin thread?</label>
+                <input id="pinCheckbox" type="checkbox" name="pinned" value="pin" />
+            </div>
         </form>
     </div>
 

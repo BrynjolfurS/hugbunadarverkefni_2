@@ -76,10 +76,6 @@
     padding: 5px;
 }
 
-.thread-table-head .post-icon {
-    background-color: inherit;
-}
-
 .thread-table-row {
     display: flex;
     overflow: hidden;
@@ -114,20 +110,20 @@
 }
 
 .post-icon {
-    flex: 5%;
+    flex: 10%;
     text-align: center;
 }
 
 .post-subject {
     display: flex;
-    flex: 70%;
+    flex: 60%;
     justify-content: flex-start;
 }
 
 .post-subject-pinned {
     background-color: #FCCC89;
     display: flex;
-    flex: 70%;
+    flex: 60%;
     justify-content: flex-start;
     margin: 2px;
     padding: 5px;

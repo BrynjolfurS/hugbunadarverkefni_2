@@ -2,20 +2,47 @@
 <html xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/styles.css}" />
     <title>Title</title>
 </head>
 <body>
+<header class="header light-blue text-yellow" style="text-align: center; ">
+    <h1 th:text="${#strings.capitalize(sport)} + ' Players'">Events</h1>
+    <div class="userInfo" th:if="${session.LoggedInUser != null}">
+        <p>User: <span th:text="*{session.LoggedInUser.username}"></span></p>
+        <form action="#" th:action="@{logout}" method="post">
+            <input type="submit" value="Logout">
+        </form>
+    </div>
+</header>
 
-<tr th:each="p : ${players}">
-    <h3 th:text="'Name: ' + ${p.playerName}"></h3>
-    <p th:text="'Description: ' + ${p.playerInfo}"></p>
-    <p th:text="'Wins: ' + ${p.wins}"></p>
-    <p th:text="'Losses ' + ${p.losses}"></p>
-    <p>------------------------------------------------------------------------------------------</p>
-</tr>
+<div class="main">
+    <div class="sidebar-left light-gray">
+        <menu class="nav">
+            <li class="nav-item nav-icon">
+                <button class="nav-button"><a th:href="@{/home}">Home</a></button>
+            </li>
+            <li th:each="sport : ${sports}">
+                <button class="nav-button">
+                    <a style="font-size: 1.1rem;" th:href="@{/home/{s}(s=${sport})}" th:text="${sport}"></a>
+                </button>
+            </li>
+        </menu>
+    </div>
 
-<div th:if="${session.LoggedInUser != null}">
-    <a th:hidden="${session.LoggedInUser.isAdmin} != true" href="./players/edit"><p>edit</p></a>
+    <div class="content-container-infoPage">
+        <div th:if="${session.LoggedInUser != null}">
+            <a th:hidden="${session.LoggedInUser.isAdmin} != true" href="./players/edit"><p>Edit players</p></a>
+        </div>
+        <tr th:each="p : ${players}">
+            <h3 th:text="'Name: ' + ${p.playerName}"></h3>
+            <p th:text="'Description: ' + ${p.playerInfo}"></p>
+            <p th:text="'Wins: ' + ${p.wins}"></p>
+            <p th:text="'Losses ' + ${p.losses}"></p>
+            <p>------------------------------------------------------------------------------------------</p>
+        </tr>
+
+    </div>
 </div>
 
 </body>

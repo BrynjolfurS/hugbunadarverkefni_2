@@ -54,14 +54,12 @@
       </div>
       <div class="thread-table">
         <div class="thread-table-head gray">
-          <div class="post-icon"></div>
           <div class="post-subject">Subject</div>
           <div class="post-comments">Comments</div>
           <div class="post-info">Information</div>
         </div>
 
         <div th:each="thread : ${threads}" class="thread-table-row">
-          <div class="post-icon"><i class="fa fa-cart-plus"></i></div>
           <div th:class="${thread.isPinned()}? 'post-subject-pinned' : 'post-subject'">
             <a th:href="@{/home/{s}/thread/{t}(s=${thread.getSport()}, t=${thread.getID()})}" th:text="${thread.getHeader()}"></a>
           </div>
@@ -88,8 +86,8 @@
       <div class="events-title">
         <h2>Upcoming Events</h2>
         <div style="padding: 5px; background-color: rgb(194, 194, 194); width: 80%; margin: 5px auto;" th:each="event : ${events}">
-          <p style="font-size: .8rem; padding: 0; margin: 0;" th:text="${event.eventDate}"></p>
           <a th:href="@{./{s}/events(s=${sport})}"><p style="margin: 0; margin-bottom: .5rem;" th:text="${event.eventName}"></p></a>
+          <p style="font-size: .8rem; padding: 0; margin: 0;" th:text="${event.getEventDate()}"></p>
         </div>
       </div>
 

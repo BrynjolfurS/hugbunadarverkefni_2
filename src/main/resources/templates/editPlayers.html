@@ -26,10 +26,15 @@
             <li class="nav-item nav-icon">
                 <button class="nav-button"><a th:href="@{/home}">Home</a></button>
             </li>
+            <li th:each="sport : ${sports}">
+                <button class="nav-button">
+                    <a style="font-size: 1.1rem;" th:href="@{/home/{s}(s=${sport})}" th:text="${#strings.capitalize(sport)}"></a>
+                </button>
+            </li>
         </menu>
     </div>
 
-    <div class="content-container" th:if="${session.LoggedInUser.isAdmin} == true">
+    <div class="content-container-infoPage" th:if="${session.LoggedInUser.isAdmin} == true">
         <h1>New Player</h1>
         <form action="#" th:action="@{./save}" th:object="${player}" method="post">
             <table>

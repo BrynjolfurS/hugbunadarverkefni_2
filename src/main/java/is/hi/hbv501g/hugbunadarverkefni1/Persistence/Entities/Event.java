@@ -27,10 +27,11 @@ public class Event {
     private String sport;
 
     //------------------test-------------------------------
-    public Event(String eventName, String eventDescription ,String sport) {
+    public Event(String eventName, String eventDescription ,String sport, LocalDate date) {
         this.eventName = eventName;
         this.eventDescription = eventDescription+" og "+eventDescription;
         this.sport = sport;
+        this.eventDate = date;
     }
     //------------------test end-------------------------------
 

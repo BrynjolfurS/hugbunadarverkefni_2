@@ -43,9 +43,18 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    width: 70%;
+    flex: 70%;
     margin: 0 1em 0 1em;
     padding: 0 20px;
+}
+
+.content-container-infoPage {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 0 1em 0 1em;
+    padding: 0 20px;
+    flex: 85%;
 }
 
 .content-row {
@@ -73,8 +82,13 @@
 
 /* Club */
 .club-description {
-    width: 600px;
-    height: 300px;
+    max-width: 600px;
+    white-space: pre-wrap;
+}
+
+.club-description-edit {
+    min-width: 600px;
+    min-height: 300px;
 }
 
 

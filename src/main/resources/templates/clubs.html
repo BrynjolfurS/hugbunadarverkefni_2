@@ -7,8 +7,14 @@
 </head>
 
 <body>
-<header class="header" style="text-align: center; ">
-  <h1>Íþróttasíðan</h1>
+<header class="header light-blue text-yellow" style="text-align: center; ">
+  <h1 th:text="${#strings.capitalize(sport)} + ' Clubs'">Events</h1>
+  <div class="userInfo" th:if="${session.LoggedInUser != null}">
+    <p>User: <span th:text="*{session.LoggedInUser.username}"></span></p>
+    <form action="#" th:action="@{logout}" method="post">
+      <input type="submit" value="Logout">
+    </form>
+  </div>
 </header>
 
 <div class="main">
@@ -25,22 +31,21 @@
     </menu>
   </div>
 
-  <div class="content-container">
+  <div class="content-container-infoPage">
+    <div th:if="${session.LoggedInUser != null}">
+      <a th:hidden="${session.LoggedInUser.isAdmin} != true" href="./clubs/edit"><p>Edit clubs</p></a>
+    </div>
+
     <tr th:each="club : ${clubs}">
       <h3 th:text="${club.clubName}"></h3>
-      <a th:href="@{${club.clubUrl}}"><p>    clubUrl   </p></a>
+      <a th:href="@{${club.clubUrl}}"><p th:text="${club.clubUrl}">    clubUrl   </p></a>
       <p th:text="${club.clubEmail}"></p>
       <p th:text="${club.clubLocation}"></p>
-      <p th:text="${club.description}"></p>
+      <p class="club-description" th:text="${club.description}"></p>
       <p>------------------------------------------------------------------------------------------</p>
 
     </tr>
   </div>
-    <div th:if="${session.LoggedInUser != null}">
-      <a th:hidden="${session.LoggedInUser.isAdmin} != true" href="./clubs/edit"><p>edit</p></a>
-    </div>
-
-
 </div>
 
 <footer class="footer">

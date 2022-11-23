@@ -6,56 +6,87 @@
     <title>Title</title>
 </head>
 <body>
+<header class="header light-blue text-yellow" style="text-align: center; ">
+    <div> </div>
 
-<h1>New Event</h1>
-<form action="#" th:action="@{./save}" th:object="${event}" method="post">
-    <table>
-        <tr>
-            <td>Event Name:</td>
-            <td><input type="text" th:field="*{eventName}" /></td>
+    <h1>Edit clubs</h1>
+
+    <div class="userInfo" th:if="${session.LoggedInUser != null}">
+        <p>User: <span th:text="*{session.LoggedInUser.username}"></span></p>
+        <form action="#" th:action="@{logout}" method="post">
+            <input type="submit" value="Logout">
+        </form>
+        <button th:hidden="${session.LoggedInUser.isAdmin} != true"><a th:href="@{admin}">Admin page</a></button>
+    </div>
+</header>
+
+<div class="main">
+    <div class="sidebar-left light-gray">
+        <menu class="nav">
+            <li class="nav-item nav-icon">
+                <button class="nav-button"><a th:href="@{/home}">Home</a></button>
+            </li>
+            <li th:each="sport : ${sports}">
+                <button class="nav-button">
+                    <a style="font-size: 1.1rem;" th:href="@{/home/{s}(s=${sport})}" th:text="${#strings.capitalize(sport)}"></a>
+                </button>
+            </li>
+        </menu>
+    </div>
+
+    <div class="content-container-infoPage">
+        <h1>New Event</h1>
+        <form action="#" th:action="@{./save}" th:object="${event}" method="post">
+            <table>
+                <tr>
+                    <td>Event Name:</td>
+                    <td><input type="text" th:field="*{eventName}" /></td>
+                </tr>
+                <tr>
+                    <td>Description:</td>
+                    <td><input type="text" th:field="*{eventDescription}" /></td>
+                </tr>
+                <tr>
+                    <td>Date:</td>
+                    <td><input type="date" th:field="*{eventDate}" /></td>
+                </tr>
+            </table>
+            <input type="submit" value="New Event" />
+        </form>
+        <p>------------------------------------------------------------------------------------------</p>
+
+        <tr th:each="e : ${events}">
+            <h3 th:text="${e.eventName}"></h3>
+            <p th:text="${e.eventDescription}"></p>
+            <p th:text="${e.eventDate}"></p>
+
+
+            <form action="#" th:action="@{./edit/{id}(id=${e.ID})}" th:object="${e}" method="post">
+                <table>
+                    <tr>
+                        <td>Event Name:</td>
+                        <td><input type="text" id="eventName" name="eventName" th:value="${e.eventName}" /></td>
+                    </tr>
+                    <tr>
+                        <td>Description:</td>
+                        <td><input type="text" id="eventDescription" name="eventDescription" th:value="${e.eventDescription}" /></td>
+                    </tr>
+                    <tr>
+                        <td>Date:</td>
+                        <td><input type="date" id="eventDate" name="eventDate" th:value="${e.eventDate}" /></td>
+                    </tr>
+                </table>
+                <input type="submit" value="Edit" />
+                <a th:href="@{./delete/{id}(id=${e.ID})}">
+                    <input type="button" value="Delete" />
+                </a>
+            </form>
+
+            <p>------------------------------------------------------------------------------------------</p>
         </tr>
-        <tr>
-            <td>Description:</td>
-            <td><input type="text" th:field="*{eventDescription}" /></td>
-        </tr>
-        <tr>
-            <td>Date:</td>
-            <td><input type="date" th:field="*{eventDate}" /></td>
-        </tr>
-    </table>
-    <input type="submit" value="New Event" />
-</form>
-<p>------------------------------------------------------------------------------------------</p>
+    </div>
+</div>
 
-<tr th:each="e : ${events}">
-    <h3 th:text="${e.eventName}"></h3>
-    <p th:text="${e.eventDescription}"></p>
-    <p th:text="${e.eventDate}"></p>
-
-
-    <form action="#" th:action="@{./edit/{id}(id=${e.ID})}" th:object="${e}" method="post">
-        <table>
-            <tr>
-                <td>Event Name:</td>
-                <td><input type="text" id="eventName" name="eventName" th:value="${e.eventName}" /></td>
-            </tr>
-            <tr>
-                <td>Description:</td>
-                <td><input type="text" id="eventDescription" name="eventDescription" th:value="${e.eventDescription}" /></td>
-            </tr>
-            <tr>
-                <td>Date:</td>
-                <td><input type="date" id="eventDate" name="eventDate" th:value="${e.eventDate}" /></td>
-            </tr>
-        </table>
-        <input type="submit" value="Edit" />
-        <a th:href="@{./delete/{id}(id=${e.ID})}">
-            <input type="button" value="Delete" />
-        </a>
-    </form>
-
-    <p>------------------------------------------------------------------------------------------</p>
-</tr>
 
 
 

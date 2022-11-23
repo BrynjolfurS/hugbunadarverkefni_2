@@ -27,7 +27,7 @@ public class ThreadController {
 
 
     @RequestMapping(value = "/home/{sport}/createThread", method = RequestMethod.POST)
-    public String addThread(HttpSession session, @PathVariable("sport") String sport, String header, String body, String username, Model model) {
+    public String addThread(HttpSession session, @PathVariable("sport") String sport, String header, String body, String username, String pinned, Model model) {
         //tekur inn thread og sendir hann í repository svo redirectum við til thread með id
 
         User sessionUser = (User) session.getAttribute("LoggedInUser");
@@ -37,6 +37,10 @@ public class ThreadController {
         }
         else {
             thread = threadService.save(new Thread(sessionUser.getUsername(), header, body, sport));
+        }
+        if (pinned != null) {
+            thread.setPinned(true);
+            thread = threadService.save(thread);
         }
 
         Long id = thread.getID();
