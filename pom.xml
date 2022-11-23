@@ -73,6 +73,26 @@
     <build>
         <pluginManagement>
             <plugins>
+
+                <plugin>
+
+                    <!-- Building an executable jar -->
+
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.1.0</version>
+                    <configuration>
+                        <archive>
+                            <manifest>
+
+                                <!-- give full qualified name of your main class-->
+                                <mainClass>src/main/java/is/hi/hbv501g/hugbunadarverkefni1/Hugbunadarverkefni1Application.java</mainClass>
+
+                            </manifest>
+                        </archive>
+                    </configuration>
+                </plugin>
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
