@@ -17,6 +17,10 @@
         <java.version>11</java.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+
+            <!-- The main class to start by executing java -jar -->
+            <start-class>is.hi.hbv501g.hugbunadarverkefni1.Hugbunadarverkefni1Application</start-class>
+
     </properties>
     <dependencies>
         <dependency>
@@ -86,7 +90,7 @@
                             <manifest>
 
                                 <!-- give full qualified name of your main class-->
-                                <mainClass>org.springframework.boot.Hugbunadarverkefni1Application.java</mainClass>
+                                <mainClass>is.hi.hbv501g.hugbunadarverkefni1.Hugbunadarverkefni1Application</mainClass>
 
                             </manifest>
                         </archive>
