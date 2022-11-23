@@ -86,7 +86,7 @@
                             <manifest>
 
                                 <!-- give full qualified name of your main class-->
-                                <mainClass>Hugbunadarverkefni1Application.java</mainClass>
+                                <mainClass>is.hi.hbv501g.Hugbunadarverkefni1Application.java</mainClass>
 
                             </manifest>
                         </archive>
