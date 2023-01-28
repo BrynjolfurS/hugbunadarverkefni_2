@@ -18,11 +18,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * modify various settings and properties for it. Here the @EnableJpaRepositories
  * annotation tells JPA to implement repository interfaces automatically.
  *
- * @author Jökull, Ólafur Pálsson, Kristófer Darri, Brynjólfur Steingrímsson
+ * @author Ólafur Pálsson, Brynjólfur Steingrímsson
  */
 
 @SpringBootApplication
-@EnableJpaRepositories
+// @EnableJpaRepositories
 public class Hugbunadarverkefni1Application extends SpringBootServletInitializer {
 
     @Override

@@ -62,7 +62,7 @@ public class Comment {
     }
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @JoinColumn(name = "ThreadID")
+        @JoinColumn(name = "ThreadID")
     public Thread getThread() {return thread;}
 
     public void setThread(Thread thread) {this.thread = thread;}
