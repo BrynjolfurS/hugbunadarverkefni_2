@@ -12,8 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
-@Controller
+@RestController
 public class ThreadController {
     private final ThreadService threadService;
     private final UserService userService;
@@ -24,7 +25,10 @@ public class ThreadController {
         this.userService = userService;
     }
 
-
+    @GetMapping(name = "/{id}", produces = "application/json")
+    public List<Thread> getThreads(@PathVariable int id) {
+        return threadService.findAllThreads();
+    }
 
     @RequestMapping(value = "/home/{sport}/createThread", method = RequestMethod.POST)
     public String addThread(HttpSession session, @PathVariable("sport") String sport, String header, String body, String username, String pinned, Model model) {
