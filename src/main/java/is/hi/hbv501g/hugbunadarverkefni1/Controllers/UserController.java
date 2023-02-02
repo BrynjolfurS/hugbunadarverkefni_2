@@ -99,7 +99,7 @@ public class UserController {
      * @return Redirect back to the home page.
      */
     @RequestMapping(value="/signUp", method= RequestMethod.POST)
-    public String signupPOST(@Valid User user, BindingResult result) {
+    public String signupPOST(User user, BindingResult result) {
         if(result.hasErrors()) {
             return "redirect:/signUp";
         }
