@@ -30,6 +30,9 @@ public class ThreadController {
         return threadService.findAllThreads();
     }
 
+    @GetMapping("/allThreads")
+    public List<Thread> getAllThreads() { return threadService.findAllThreads(); }
+
     @RequestMapping(value = "/home/{sport}/createThread", method = RequestMethod.POST)
     public String addThread(HttpSession session, @PathVariable("sport") String sport, String header, String body, String username, String pinned, Model model) {
         //tekur inn thread og sendir hann í repository svo redirectum við til thread með id
