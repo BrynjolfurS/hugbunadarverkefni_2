@@ -1,6 +1,8 @@
 package is.hi.hbv501g.hugbunadarverkefni1.Persistence.Entities;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,6 +21,8 @@ public class Thread implements Comparable<Thread> {
     private long ID;
     private String username;
     private boolean isPinned = false;
+
+    @JsonManagedReference
     private List<Comment> comments = new ArrayList<>();
     private String header;
     private String body;

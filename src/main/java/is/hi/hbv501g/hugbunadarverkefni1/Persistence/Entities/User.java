@@ -1,6 +1,8 @@
 package is.hi.hbv501g.hugbunadarverkefni1.Persistence.Entities;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -19,6 +21,8 @@ public class User {
     
     private String userPassword;
     private boolean isAdmin;
+
+    @JsonManagedReference
     private List<Comment> comments;
 
     public User() {

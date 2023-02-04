@@ -1,6 +1,8 @@
 package is.hi.hbv501g.hugbunadarverkefni1.Persistence.Entities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 import java.time.LocalDate;
@@ -17,6 +19,8 @@ import java.time.LocalTime;
 public class Comment {
 
     private long ID;
+
+    @JsonBackReference
     private User user;
     private LocalDate dateCommented;
 
@@ -28,6 +32,7 @@ public class Comment {
     @Column(columnDefinition="LONGVARCHAR")
     private String comment;
 
+    @JsonBackReference
     private Thread thread; // Thread ID Betra? Dno
 
     public Comment() {
