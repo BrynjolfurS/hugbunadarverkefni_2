@@ -175,6 +175,7 @@ public class NavController {
         return "createThread";
     }
 
+    /*
     @RequestMapping(value = "/home/{sport}/thread/{id}", method = RequestMethod.GET)
     public String goToThread(@PathVariable("id") Long id, Model model, HttpSession session) {
         //add thred með {id} i model
@@ -185,8 +186,8 @@ public class NavController {
         model.addAttribute("comments", thread.getComments());
         model.addAttribute("id", id);
 
-        return "thread";
-    }
+        return ;
+    }*/
 
 
    @RequestMapping(value = "/login", method = RequestMethod.GET)
