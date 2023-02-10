@@ -16,20 +16,15 @@ import java.util.List;
 @Entity
 @Table(name = "threads")
 public class Thread implements Comparable<Thread> {
-
-
     private long ID;
     private String username;
     private boolean isPinned = false;
-
     @JsonManagedReference
     private List<Comment> comments = new ArrayList<>();
     private String header;
     private String body;
     private LocalDate date;
-
     private String sport;
-
     public Thread() {
     }
 

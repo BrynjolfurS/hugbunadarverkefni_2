@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
  * This includes requests reserved for users with administrative priviliges.
  *
  */
-@Controller
+@RestController
 public class UserController {
 
     UserService userService;

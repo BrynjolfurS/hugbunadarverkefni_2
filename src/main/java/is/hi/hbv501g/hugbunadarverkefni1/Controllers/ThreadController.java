@@ -25,9 +25,9 @@ public class ThreadController {
         this.userService = userService;
     }
 
-    @GetMapping(name = "/{id}", produces = "application/json")
-    public List<Thread> getThreads(@PathVariable int id) {
-        return threadService.findAllThreads();
+    @GetMapping("/home/{sport}/thread/{id}")
+    public Thread getThreadById(@PathVariable Long id) {
+        return threadService.findThreadById(id);
     }
 
     @GetMapping("/allThreads")
