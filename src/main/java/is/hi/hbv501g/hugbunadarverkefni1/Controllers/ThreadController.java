@@ -91,7 +91,4 @@ public class ThreadController {
         //tekur inn thred id og deletes thred svo redirectum við á sport
         return "redirect:/home/{sport}";
     }
-
-
-
 }
