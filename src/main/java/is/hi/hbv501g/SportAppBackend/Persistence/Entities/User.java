@@ -14,12 +14,26 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class User {
+
     private long ID;
 
     private String username;
     
     private String userPassword;
     private boolean isAdmin;
+
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
+
+    @JsonManagedReference
+    private boolean loggedIn;
+    @JsonManagedReference
+    private List<Comment> comments;
 
     public User() {
     }

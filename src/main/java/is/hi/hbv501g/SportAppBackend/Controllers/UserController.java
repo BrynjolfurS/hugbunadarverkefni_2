@@ -2,7 +2,9 @@ package is.hi.hbv501g.SportAppBackend.Controllers;
 
 import is.hi.hbv501g.SportAppBackend.Persistence.Entities.User;
 import is.hi.hbv501g.SportAppBackend.Services.UserService;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -97,15 +99,15 @@ public class UserController {
      * @return Redirect back to the home page.
      */
     @RequestMapping(value="/signUp", method= RequestMethod.POST)
-    public String signupPOST(User user, BindingResult result) {
+    public User signupPOST(User user, BindingResult result) {
         if(result.hasErrors()) {
-            return "redirect:/signUp";
+            return null;
         }
         User exists = userService.findByUsername(user.getUsername());
         if(exists == null) {
             userService.save(user);
         }
-        return "redirect:/";
+        return user;
     }
 
     /**
@@ -117,6 +119,8 @@ public class UserController {
      * @param session Will contain the user data if the User service approves log in attempt.
      * @return Redirect back to the home page.
      */
+
+    /*
     @RequestMapping(value="/login", method = RequestMethod.POST)
     public String loginPOST(User user, BindingResult result, Model model, HttpSession session) {
         if(result.hasErrors()) {
@@ -129,6 +133,15 @@ public class UserController {
             return "redirect:/";
         }
         return "redirect:/home";
+    }*/
+
+    @PostMapping("/login")
+    public boolean loginPOST(String username, String password) {
+        User user = userService.findByUsername(username);
+        if (user.getUserPassword().equals(password)) {
+            user.setLoggedIn(true);
+        }
+        return user.isLoggedIn();
     }
 
     /**

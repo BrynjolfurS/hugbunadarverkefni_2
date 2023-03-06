@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
@@ -22,11 +23,18 @@ import java.util.List;
  * appropriate service for the data needed.
  *
  */
-@Controller
+@RestController
 public class NavController {
 
     private final SportService sportService;
     private final ThreadService threadService;
+
+
+    // Return single thread by id from thread service and return json data
+    @RequestMapping(value = "/home/{sport}/thread/{id}", method = RequestMethod.GET)
+    public Thread getThreadById(@PathVariable Long id) {
+        return threadService.findThreadById(id);
+    }
 
 
 
@@ -35,9 +43,6 @@ public class NavController {
         this.sportService = sportService;
         this.threadService = threadService;
     }
-
-
-
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String goToRoot() {

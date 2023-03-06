@@ -18,10 +18,8 @@ public class Event {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long ID;
-
     private String eventName;
     private String eventDescription;
-
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate eventDate;
     private String sport;
@@ -46,6 +44,7 @@ public class Event {
     }
 
     public String getEventName() {
+
         return eventName;
     }
 
