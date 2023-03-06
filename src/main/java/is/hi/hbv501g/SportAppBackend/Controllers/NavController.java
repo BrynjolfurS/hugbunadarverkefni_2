@@ -1,10 +1,9 @@
-package is.hi.hbv501g.hugbunadarverkefni1.Controllers;
+package is.hi.hbv501g.SportAppBackend.Controllers;
 
-import is.hi.hbv501g.hugbunadarverkefni1.Persistence.Entities.*;
-import is.hi.hbv501g.hugbunadarverkefni1.Persistence.Entities.Thread;
-import is.hi.hbv501g.hugbunadarverkefni1.Services.PlayerService;
-import is.hi.hbv501g.hugbunadarverkefni1.Services.SportService;
-import is.hi.hbv501g.hugbunadarverkefni1.Services.ThreadService;
+import is.hi.hbv501g.SportAppBackend.Persistence.Entities.*;
+import is.hi.hbv501g.SportAppBackend.Persistence.Entities.Thread;
+import is.hi.hbv501g.SportAppBackend.Services.SportService;
+import is.hi.hbv501g.SportAppBackend.Services.ThreadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,14 +27,13 @@ public class NavController {
 
     private final SportService sportService;
     private final ThreadService threadService;
-    private final PlayerService playerService;
+
 
 
     @Autowired
-    public NavController(SportService sportService, ThreadService threadService, PlayerService playerService){
+    public NavController(SportService sportService, ThreadService threadService){
         this.sportService = sportService;
         this.threadService = threadService;
-        this.playerService = playerService;
     }
 
 
@@ -75,7 +73,6 @@ public class NavController {
         Collections.sort(sportThreads, Collections.reverseOrder());
         model.addAttribute("threads", sportThreads);
         model.addAttribute("sports", sportService.findAllSports());
-        model.addAttribute("players", playerService.findTopPlayersBySport(sport));
         model.addAttribute("events", sportService.findAllEventsBySport(sport));
 
         return "sport";
@@ -111,29 +108,6 @@ public class NavController {
         return "clubs";
     }
 
-    @RequestMapping(value = "/home/{sport}/players", method = RequestMethod.GET)
-    public String goToTopPlayers(@PathVariable("sport") String sport, Model model) {
-        // add players from {sport} to model
-        if(!sportService.isSport(sport))
-            return "redirect:/home";
-
-        model.addAttribute("players", sportService.findAllPlayersBySport(sport));
-        model.addAttribute("sports", sportService.findAllSports());
-        model.addAttribute("sport", sport);
-        return "players";
-    }
-
-    @RequestMapping(value = "/home/{sport}/players/edit", method = RequestMethod.GET)
-    public String goToEditPlayers(@PathVariable("sport") String sport, Model model) {
-        if(!sportService.isSport(sport))
-            return "redirect:/home";
-
-        model.addAttribute("player", new Player());
-        model.addAttribute("players", sportService.findAllPlayersBySport(sport));
-        model.addAttribute("sports", sportService.findAllSports());
-        model.addAttribute("sport", sport);
-        return "editPlayers";
-    }
     @RequestMapping(value = "/home/{sport}/clubs/edit", method = RequestMethod.GET)
     public String goToEditClubs(@PathVariable("sport") String sport, Model model) {
         if(!sportService.isSport(sport))
@@ -217,9 +191,6 @@ public class NavController {
             threadService.save(new Thread("User", "Dummy Thread " + i, "Dummy Body", "badminton"));
             threadService.save(new Thread("User", "Dummy Thread " + i, "Dummy Body", "pilukast"));
             threadService.save(new Thread("User", "Dummy Thread " + i, "Dummy Body", "Extreme Ironing"));
-            playerService.save(new Player("Dummy Player " + i, "info", 10-i, i, "badminton"));
-            playerService.save(new Player("Dummy Player " + i, "info", 10-i, i, "pilukast"));
-            playerService.save(new Player("Dummy Player " + i, "info", 10-i, i, "Extreme Ironing"));
             sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "badminton", LocalDate.of(2022,i+1,1+i*2)));
             sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "pilukast", LocalDate.of(2022,i+1,1+i*2)));
             sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "Extreme Ironing", LocalDate.of(2022,i+1,1+i*2)));

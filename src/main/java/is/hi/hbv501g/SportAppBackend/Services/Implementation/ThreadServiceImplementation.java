@@ -1,13 +1,12 @@
-package is.hi.hbv501g.hugbunadarverkefni1.Services.Implementation;
+package is.hi.hbv501g.SportAppBackend.Services.Implementation;
 
-import is.hi.hbv501g.hugbunadarverkefni1.Persistence.Entities.Comment;
-import is.hi.hbv501g.hugbunadarverkefni1.Persistence.Entities.Thread;
-import is.hi.hbv501g.hugbunadarverkefni1.Persistence.Repositories.ThreadRepository;
-import is.hi.hbv501g.hugbunadarverkefni1.Services.ThreadService;
+import is.hi.hbv501g.SportAppBackend.Persistence.Entities.Comment;
+import is.hi.hbv501g.SportAppBackend.Persistence.Entities.Thread;
+import is.hi.hbv501g.SportAppBackend.Persistence.Repositories.ThreadRepository;
+import is.hi.hbv501g.SportAppBackend.Services.ThreadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,10 +18,6 @@ public class ThreadServiceImplementation implements ThreadService {
     public ThreadServiceImplementation(ThreadRepository threadRepository) {
         this.threadRepository = threadRepository;
     }
-
-//--------------------------------------------------------------
-
-
 
     @Override
     public void addComment(Comment comment, Thread thread) {

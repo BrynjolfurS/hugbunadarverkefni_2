@@ -1,6 +1,6 @@
-package is.hi.hbv501g.hugbunadarverkefni1.Persistence.Repositories;
+package is.hi.hbv501g.SportAppBackend.Persistence.Repositories;
 
-import is.hi.hbv501g.hugbunadarverkefni1.Persistence.Entities.Club;
+import is.hi.hbv501g.SportAppBackend.Persistence.Entities.Club;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,12 +1,10 @@
-package is.hi.hbv501g.hugbunadarverkefni1.Services.Implementation;
+package is.hi.hbv501g.SportAppBackend.Services.Implementation;
 
-import is.hi.hbv501g.hugbunadarverkefni1.Persistence.Entities.Club;
-import is.hi.hbv501g.hugbunadarverkefni1.Persistence.Entities.Event;
-import is.hi.hbv501g.hugbunadarverkefni1.Persistence.Entities.Player;
-import is.hi.hbv501g.hugbunadarverkefni1.Persistence.Repositories.ClubRepository;
-import is.hi.hbv501g.hugbunadarverkefni1.Persistence.Repositories.EventRepository;
-import is.hi.hbv501g.hugbunadarverkefni1.Persistence.Repositories.PlayerRepository;
-import is.hi.hbv501g.hugbunadarverkefni1.Services.SportService;
+import is.hi.hbv501g.SportAppBackend.Persistence.Entities.Club;
+import is.hi.hbv501g.SportAppBackend.Persistence.Entities.Event;
+import is.hi.hbv501g.SportAppBackend.Persistence.Repositories.ClubRepository;
+import is.hi.hbv501g.SportAppBackend.Persistence.Repositories.EventRepository;
+import is.hi.hbv501g.SportAppBackend.Services.SportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +15,11 @@ import java.util.List;
 @Service
 public class SportServiceImplementation implements SportService {
 
-    private PlayerRepository playerRepository;
     private EventRepository eventRepository;
     private ClubRepository clubRepository;
 
     @Autowired
-    public SportServiceImplementation(PlayerRepository playerRepository, EventRepository eventRepository, ClubRepository clubRepository) {
-        this.playerRepository = playerRepository;
+    public SportServiceImplementation(EventRepository eventRepository, ClubRepository clubRepository) {
         this.clubRepository = clubRepository;
         this.eventRepository = eventRepository;
     }
@@ -79,24 +75,6 @@ public class SportServiceImplementation implements SportService {
         eventRepository.delete(eventRepository.findByID(id));
     }
     //------------------------EVENT END----------------------------------------------
-
-
-    //------------------------PLAYER START----------------------------------------------
-    @Override
-    public List<Player> findAllPlayersBySport(String sport) {
-        return playerRepository.findBySport(sport);
-    }
-
-    @Override
-    public Player savePlayer(Player player) {
-        return playerRepository.save(player);
-    }
-
-    @Override
-    public void deletPlayerById(long id) {
-        playerRepository.delete(playerRepository.findByID(id));
-    }
-    //------------------------PLAYER END----------------------------------------------
 
 
 }

@@ -1,6 +1,6 @@
-package is.hi.hbv501g.hugbunadarverkefni1.Services;
+package is.hi.hbv501g.SportAppBackend.Services;
 
-import is.hi.hbv501g.hugbunadarverkefni1.Persistence.Entities.User;
+import is.hi.hbv501g.SportAppBackend.Persistence.Entities.User;
 
 import java.util.List;
 

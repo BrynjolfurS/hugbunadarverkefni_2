@@ -1,7 +1,10 @@
-package is.hi.hbv501g.hugbunadarverkefni1.Persistence.Entities;
+package is.hi.hbv501g.SportAppBackend.Persistence.Entities;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 
@@ -17,14 +20,12 @@ import java.time.LocalTime;
 @Entity
 @Table(name = "comments")
 public class Comment {
-
     private long ID;
 
-    @JsonBackReference
-    private User user;
-    private LocalDate dateCommented;
+    private String userName;
+//    private LocalDate dateCommented;
 
-    private LocalTime timeCommented;
+    private LocalDateTime timeCommented;
 
     /**
      * The columnDefinition property is changed to allow for longer comments.
@@ -38,10 +39,10 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(User user, String comment, Thread thread) {
-        this.user = user;
-        this.dateCommented = LocalDate.now();
-        this.timeCommented = LocalTime.now();
+    public Comment(String user, String comment, Thread thread) {
+        this.userName = user;
+//        this.dateCommented = LocalDate.now();
+        this.timeCommented = LocalDateTime.now();
         this.comment = comment;
         this.thread = thread;
     }
@@ -52,39 +53,48 @@ public class Comment {
     public long getID() {
         return ID;
     }
-    public void setID(Long id) {
-        this.ID = id;
+    public void setID(Long ID) {
+        this.ID = ID;
     }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    // TODO: Skoða betur bidirectional relation ef comment á að vísa í user object
+//    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+//    @JoinColumn(name = "UserID")
+//    public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @JoinColumn(name = "UserID")
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-        @JoinColumn(name = "ThreadID")
+    @JoinColumn(name = "ThreadID")
     public Thread getThread() {return thread;}
 
     public void setThread(Thread thread) {this.thread = thread;}
 
-    public LocalDate getDateCommented() {
-        return dateCommented;
-    }
+//    public LocalDate getDateCommented() {
+//        return dateCommented;
+//    }
+//
+//    public void setDateCommented(LocalDate dateCommented) {
+//        this.dateCommented = dateCommented;
+//    }
 
-    public void setDateCommented(LocalDate dateCommented) {
-        this.dateCommented = dateCommented;
-    }
-
-    public LocalTime getTimeCommented() {
+    public LocalDateTime getTimeCommented() {
         return timeCommented;
     }
 
-    public void setTimeCommented(LocalTime timeCommented) {
+    public void setTimeCommented(LocalDateTime timeCommented) {
         this.timeCommented = timeCommented;
     }
     

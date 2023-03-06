@@ -1,7 +1,7 @@
-package is.hi.hbv501g.hugbunadarverkefni1.Services;
+package is.hi.hbv501g.SportAppBackend.Services;
 
-import is.hi.hbv501g.hugbunadarverkefni1.Persistence.Entities.Comment;
-import is.hi.hbv501g.hugbunadarverkefni1.Persistence.Entities.Thread;
+import is.hi.hbv501g.SportAppBackend.Persistence.Entities.Comment;
+import is.hi.hbv501g.SportAppBackend.Persistence.Entities.Thread;
 
 import java.util.List;
 

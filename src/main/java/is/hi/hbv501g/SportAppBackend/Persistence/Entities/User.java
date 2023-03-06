@@ -1,7 +1,7 @@
-package is.hi.hbv501g.hugbunadarverkefni1.Persistence.Entities;
+package is.hi.hbv501g.SportAppBackend.Persistence.Entities;
 
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,16 +14,12 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class User {
-
     private long ID;
 
     private String username;
     
     private String userPassword;
     private boolean isAdmin;
-
-    @JsonManagedReference
-    private List<Comment> comments;
 
     public User() {
     }
@@ -54,12 +50,18 @@ public class User {
         this.userPassword = userPassword;
     }
 
-    public User(String username, String userPassword, boolean isAdmin, List<Comment> comments) {
+    public User(String username, String userPassword, boolean isAdmin) {
         this.username = username;
         this.userPassword = userPassword;
-        this.comments = comments;
         this.isAdmin = isAdmin;
     }
+
+//    public User(String username, String userPassword, boolean isAdmin, List<Comment> comments) {
+//        this.username = username;
+//        this.userPassword = userPassword;
+//        this.comments = comments;
+//        this.isAdmin = isAdmin;
+//    }
 
     public boolean getIsAdmin() {
         return isAdmin;
@@ -69,13 +71,5 @@ public class User {
         this.isAdmin = isAdmin;
     }
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
 
 }

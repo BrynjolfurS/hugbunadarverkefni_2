@@ -1,8 +1,8 @@
-package is.hi.hbv501g.hugbunadarverkefni1.Services.Implementation;
+package is.hi.hbv501g.SportAppBackend.Services.Implementation;
 
-import is.hi.hbv501g.hugbunadarverkefni1.Persistence.Entities.User;
-import is.hi.hbv501g.hugbunadarverkefni1.Persistence.Repositories.UserRepository;
-import is.hi.hbv501g.hugbunadarverkefni1.Services.UserService;
+import is.hi.hbv501g.SportAppBackend.Persistence.Entities.User;
+import is.hi.hbv501g.SportAppBackend.Persistence.Repositories.UserRepository;
+import is.hi.hbv501g.SportAppBackend.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

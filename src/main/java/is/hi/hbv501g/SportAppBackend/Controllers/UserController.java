@@ -1,9 +1,8 @@
-package is.hi.hbv501g.hugbunadarverkefni1.Controllers;
+package is.hi.hbv501g.SportAppBackend.Controllers;
 
-import is.hi.hbv501g.hugbunadarverkefni1.Persistence.Entities.User;
-import is.hi.hbv501g.hugbunadarverkefni1.Services.UserService;
+import is.hi.hbv501g.SportAppBackend.Persistence.Entities.User;
+import is.hi.hbv501g.SportAppBackend.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;

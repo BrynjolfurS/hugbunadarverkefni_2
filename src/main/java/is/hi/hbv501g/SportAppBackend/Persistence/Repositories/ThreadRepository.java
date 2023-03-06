@@ -1,7 +1,7 @@
-package is.hi.hbv501g.hugbunadarverkefni1.Persistence.Repositories;
+package is.hi.hbv501g.SportAppBackend.Persistence.Repositories;
 
-import is.hi.hbv501g.hugbunadarverkefni1.Persistence.Entities.Comment;
-import is.hi.hbv501g.hugbunadarverkefni1.Persistence.Entities.Thread;
+import is.hi.hbv501g.SportAppBackend.Persistence.Entities.Comment;
+import is.hi.hbv501g.SportAppBackend.Persistence.Entities.Thread;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

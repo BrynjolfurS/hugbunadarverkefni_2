@@ -1,4 +1,4 @@
-package is.hi.hbv501g.hugbunadarverkefni1.Persistence.Entities;
+package is.hi.hbv501g.SportAppBackend.Persistence.Entities;
 
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;

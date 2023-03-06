@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>is.hi.hbv501g</groupId>
-    <artifactId>Hugbunadarverkefni1</artifactId>
+    <artifactId>SportAppBackend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Hugbunadarverkefni1</name>
     <description>Hugbunadarverkefni1</description>

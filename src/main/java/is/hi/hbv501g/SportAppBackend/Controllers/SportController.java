@@ -1,11 +1,9 @@
-package is.hi.hbv501g.hugbunadarverkefni1.Controllers;
+package is.hi.hbv501g.SportAppBackend.Controllers;
 
-import is.hi.hbv501g.hugbunadarverkefni1.Persistence.Entities.Club;
-import is.hi.hbv501g.hugbunadarverkefni1.Persistence.Entities.Event;
-import is.hi.hbv501g.hugbunadarverkefni1.Persistence.Entities.Player;
-import is.hi.hbv501g.hugbunadarverkefni1.Services.SportService;
+import is.hi.hbv501g.SportAppBackend.Persistence.Entities.Club;
+import is.hi.hbv501g.SportAppBackend.Persistence.Entities.Event;
+import is.hi.hbv501g.SportAppBackend.Services.SportService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -82,29 +80,6 @@ public class SportController {
     //-----------------------EVENT---END-------------------------------
 
 
-    //-----------------------PLAYER---START-------------------------------
-    @RequestMapping(value = "/home/{sport}/players/edit/{id}", method = RequestMethod.POST)
-    public String editPlayer(@PathVariable("id") Long id, Player player, Model model) {
-        //takes in object and saves changes
-        player.setID(id);
-        sportService.savePlayer(player);
-        return "redirect:/home/{sport}/players/edit";
-    }
-
-    @RequestMapping(value = "/home/{sport}/players/save", method = RequestMethod.POST)
-    public String savePlayer(Player player, Model model) {
-        //takes in object and saves changes
-        sportService.savePlayer(player);
-        return "redirect:/home/{sport}/players";
-    }
-
-    @RequestMapping(value = "/home/{sport}/players/delete/{id}", method = RequestMethod.GET)
-    public String deletePlayer(@PathVariable("id") Long id, Model model) {
-        //takes in object and saves changes
-        sportService.deletPlayerById(id);
-        return "redirect:/home/{sport}/players/edit";
-    }
-    //-----------------------PLAYER---END-------------------------------
 
 
 
