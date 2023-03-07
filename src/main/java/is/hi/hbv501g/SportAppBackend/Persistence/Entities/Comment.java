@@ -11,6 +11,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * The Comment class contains data related to a comment posted in a specific thread by a specific user.
@@ -25,7 +26,7 @@ public class Comment {
     private String userName;
 //    private LocalDate dateCommented;
 
-    private LocalDateTime timeCommented;
+    private String timeCommented;
 
     /**
      * The columnDefinition property is changed to allow for longer comments.
@@ -42,7 +43,9 @@ public class Comment {
     public Comment(String user, String comment, Thread thread) {
         this.userName = user;
 //        this.dateCommented = LocalDate.now();
-        this.timeCommented = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter f = DateTimeFormatter.ISO_DATE_TIME;
+        this.timeCommented = now.format(f);
         this.comment = comment;
         this.thread = thread;
     }
@@ -90,11 +93,11 @@ public class Comment {
 //        this.dateCommented = dateCommented;
 //    }
 
-    public LocalDateTime getTimeCommented() {
+    public String getTimeCommented() {
         return timeCommented;
     }
 
-    public void setTimeCommented(LocalDateTime timeCommented) {
+    public void setTimeCommented(String timeCommented) {
         this.timeCommented = timeCommented;
     }
     
