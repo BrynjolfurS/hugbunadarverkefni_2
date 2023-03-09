@@ -33,6 +33,7 @@ public class SportServiceImplementation implements SportService {
         sport.add("badminton");
         sport.add("pilukast");
         sport.add("Extreme Ironing");
+        sport.add("bogfimi");
         return sport;
     }
 
