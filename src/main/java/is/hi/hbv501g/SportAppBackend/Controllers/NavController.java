@@ -69,19 +69,15 @@ public class NavController {
     }
 
     @RequestMapping(value = "/home/{sport}", method = RequestMethod.GET)
-    public String goToSport(@PathVariable("sport") String sport, Model model, HttpSession session) {
+    public List<Thread> goToSport(@PathVariable("sport") String sport, Model model, HttpSession session) {
 
         //add threads from {sport} to model
         if(!sportService.isSport(sport))
-            return "redirect:/home";
+            return null;
 
         List<Thread> sportThreads = threadService.findAllThreadsBySport(sport);
-        Collections.sort(sportThreads, Collections.reverseOrder());
-        model.addAttribute("threads", sportThreads);
-        model.addAttribute("sports", sportService.findAllSports());
-        model.addAttribute("events", sportService.findAllEventsBySport(sport));
 
-        return "sport";
+        return sportThreads;
     }
 
     @RequestMapping(value = "/home/{sport}/about", method = RequestMethod.GET)

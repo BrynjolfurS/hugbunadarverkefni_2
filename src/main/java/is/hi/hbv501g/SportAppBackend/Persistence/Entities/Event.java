@@ -27,7 +27,7 @@ public class Event {
     //------------------test-------------------------------
     public Event(String eventName, String eventDescription ,String sport, LocalDate date) {
         this.eventName = eventName;
-        this.eventDescription = eventDescription+" og "+eventDescription;
+        this.eventDescription = eventDescription;
         this.sport = sport;
         this.eventDate = date;
     }
