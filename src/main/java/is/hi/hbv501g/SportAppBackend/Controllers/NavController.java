@@ -42,6 +42,7 @@ public class NavController {
     public NavController(SportService sportService, ThreadService threadService){
         this.sportService = sportService;
         this.threadService = threadService;
+        CreateDummyData();
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -63,24 +64,20 @@ public class NavController {
 
     @RequestMapping(value = "/dummydata", method = RequestMethod.GET)
     public String createDummyData(HttpSession session) {
-        CreateDummyData(session);
+        CreateDummyData();
         return "redirect:/home";
     }
 
     @RequestMapping(value = "/home/{sport}", method = RequestMethod.GET)
-    public String goToSport(@PathVariable("sport") String sport, Model model, HttpSession session) {
+    public List<Thread> goToSport(@PathVariable("sport") String sport, Model model, HttpSession session) {
 
         //add threads from {sport} to model
         if(!sportService.isSport(sport))
-            return "redirect:/home";
+            return null;
 
         List<Thread> sportThreads = threadService.findAllThreadsBySport(sport);
-        Collections.sort(sportThreads, Collections.reverseOrder());
-        model.addAttribute("threads", sportThreads);
-        model.addAttribute("sports", sportService.findAllSports());
-        model.addAttribute("events", sportService.findAllEventsBySport(sport));
 
-        return "sport";
+        return sportThreads;
     }
 
     @RequestMapping(value = "/home/{sport}/about", method = RequestMethod.GET)
@@ -92,25 +89,22 @@ public class NavController {
     }
 
     @RequestMapping(value = "/home/{sport}/events", method = RequestMethod.GET)
-    public String goToEvents(@PathVariable("sport") String sport, Model model) {
-        if(!sportService.isSport(sport))
-            return "redirect:/home";
-
-        model.addAttribute("events", sportService.findAllEventsBySport(sport));
-        model.addAttribute("sports", sportService.findAllSports());
-        model.addAttribute("sport", sport);
-        return "events";
+    public List<Event> goToEvents(@PathVariable("sport") String sport, Model model) {
+        if(!sportService.isSport(sport)) {
+            System.out.println("Sport not found");
+            return null;
+        }
+        return sportService.findAllEventsBySport(sport);
     }
 
     @RequestMapping(value = "/home/{sport}/clubs", method = RequestMethod.GET)
-    public String goToClubs(@PathVariable("sport") String sport, Model model) {
-        if(!sportService.isSport(sport))
-            return "redirect:/home";
+    public List<Club> goToClubs(@PathVariable("sport") String sport, Model model) {
+        if(!sportService.isSport(sport)) {
+            System.out.println("Sport not found");
+            return null;
 
-        model.addAttribute("clubs", sportService.findAllClubsBySport(sport));
-        model.addAttribute("sports", sportService.findAllSports());
-        model.addAttribute("sport", sport);
-        return "clubs";
+        }
+        return sportService.findAllClubsBySport(sport);
     }
 
     @RequestMapping(value = "/home/{sport}/clubs/edit", method = RequestMethod.GET)
@@ -181,7 +175,7 @@ public class NavController {
         return "signUp";
     }
 
-    public void CreateDummyData(HttpSession session) {
+    public void CreateDummyData() {
         Thread tips1 = new Thread("Íþróttasíða", "Beginner tips & FAQ", "Here are some useful tips..", "badminton");
         Thread tips2 = new Thread("Íþróttasíða", "Beginner tips & FAQ", "Here are some useful tips..", "pilukast");
         Thread tips3 = new Thread("Íþróttasíða", "Beginner tips & FAQ", "Here are some useful tips..", "Extreme Ironing");
@@ -199,6 +193,7 @@ public class NavController {
             sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "badminton", LocalDate.of(2022,i+1,1+i*2)));
             sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "pilukast", LocalDate.of(2022,i+1,1+i*2)));
             sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "Extreme Ironing", LocalDate.of(2022,i+1,1+i*2)));
+            sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "bogfimi", LocalDate.of(2022,i+1,1+i*2)));
         }
         sportService.saveClub(new Club("Badmintonfélag Hafnarfjarðar", "https://www.badmintonfelag.is/", "bh@bhbadminton.is",
                 "Strandgötu 53, 220 Hafnarfirði",
@@ -207,6 +202,18 @@ public class NavController {
                         "Einnig er hægt að iðka tennis hjá Badmintonfélagi Hafnarfjarðar en æfingar í tennis fara fram í Tennishöllinn í Kópavogi. " +
                         "Boðið er uppá æfingar fyrir börn frá 5 ára aldri. Upplýsingar um badminton og borðtennis má finna á vefnum badmintonfelag.is " +
                         "en upplýsingar um tennis hjá Tennishöllinni í Kópavogi.", "badminton"));
+
+        sportService.saveClub(new Club("Pilukastfélag Hafnarfjarðar", "https://www.pilukastfelag.is/", "bh@bhpilukast.is",
+                "Strandgötu 53, 220 Hafnarfirði", "Pilukastfélag Hafnarfjarðar var stofnað 7.október 1959.", "pilukast"));
+
+        sportService.saveClub(new Club("Bogfimifélag Hafnarfjarðar", "https://www.bogfimifelag.is/", "bh@bhbogfimi.is",
+                "Álfheimum 53, 104 Reykjavík", "Bogfimifélag Reykjavíkur var stofnað 2.janúar 1995.", "bogfimi"));
+
+        sportService.saveClub(new Club("Pilukastfélag Reykjavíkur", "https://www.pilukastfelagrvk.is/", "rvk@rvkpilukast.is",
+                "Lágmúla 2, 105 Reykjavík", "Pilukastfélag Reykjavíkur var stofnað 1.desember 1923.", "pilukast"));
+
+        sportService.saveClub(new Club("Staujararnir", "https://www.straujararnir.is/", "bh@straujararnir.is",
+                "Hamragorg 17, 200 Kópavogi", "Straujararnir voru stofnaðir 15.maí 2005.", "Extreme Ironing"));
 
     }
 }
