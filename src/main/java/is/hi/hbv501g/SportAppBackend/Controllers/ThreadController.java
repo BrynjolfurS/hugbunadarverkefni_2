@@ -116,6 +116,7 @@ public class ThreadController {
     public void createDummyData() {
         if (dummyTeljari <= 0) {
             User admin = new User("admin","admin",true);
+            userService.save(admin);
             Thread tips1 = new Thread("Íþróttasíða", "Beginner tips & FAQ", "Here are some useful tips..", "badminton");
             Thread tips2 = new Thread("Íþróttasíða", "Beginner tips & FAQ", "Here are some useful tips..", "pilukast");
             Thread tips3 = new Thread("Íþróttasíða", "Beginner tips & FAQ", "Here are some useful tips..", "Extreme Ironing");
