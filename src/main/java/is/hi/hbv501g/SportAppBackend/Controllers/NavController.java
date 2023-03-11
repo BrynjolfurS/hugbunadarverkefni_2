@@ -7,10 +7,7 @@ import is.hi.hbv501g.SportAppBackend.Services.ThreadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
@@ -161,6 +158,11 @@ public class NavController {
 
         return ;
     }*/
+
+    @GetMapping("/sports")
+    public List<String> getAllSports() {
+        return sportService.findAllSports();
+    }
 
 
    @RequestMapping(value = "/login", method = RequestMethod.GET)

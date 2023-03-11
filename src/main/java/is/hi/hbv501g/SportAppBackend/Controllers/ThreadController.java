@@ -2,6 +2,7 @@ package is.hi.hbv501g.SportAppBackend.Controllers;
 
 import is.hi.hbv501g.SportAppBackend.Persistence.Entities.*;
 import is.hi.hbv501g.SportAppBackend.Persistence.Entities.Thread;
+import is.hi.hbv501g.SportAppBackend.Services.CommentService;
 import is.hi.hbv501g.SportAppBackend.Services.SportService;
 import is.hi.hbv501g.SportAppBackend.Services.ThreadService;
 import is.hi.hbv501g.SportAppBackend.Services.UserService;
@@ -18,12 +19,14 @@ import java.util.List;
 public class ThreadController {
     private final ThreadService threadService;
     private final UserService userService;
+    private final CommentService commentService;
 
     // Má Deleta seinna: Kemur í veg fyrir að dummy gögn séu endalaust búin til
     private int dummyTeljari = 0;
 
     @Autowired
-    public ThreadController(ThreadService threadService, SportService sportService, UserService userService){
+    public ThreadController(ThreadService threadService, SportService sportService, UserService userService, CommentService commentService) {
+        this.commentService = commentService;
         this.threadService = threadService;
         this.userService = userService;
     }
@@ -53,6 +56,18 @@ public class ThreadController {
         Comment newComment = new Comment(poster.getUsername(), commentBody, threadPostedIn);
         threadService.addComment(newComment, threadPostedIn);
         return "Comment successfully posted!";
+    }
+
+    @DeleteMapping("/comments/{id}/delete")
+    public String deleteComment(@PathVariable("id") String id) {
+        try {
+            System.out.println("Comment Id: " + id);
+            Comment commentToDelete = commentService.findCommentById(Long.valueOf(id));
+            commentService.delete(commentToDelete);
+        } catch (Exception e) {
+            System.out.println("Error deleting comment: " + e.getMessage());
+        }
+        return "Comment successfully deleted!";
     }
 
     @RequestMapping(value = "/home/{sport}/createThread", method = RequestMethod.POST)
@@ -116,11 +131,11 @@ public class ThreadController {
     public void createDummyData() {
         if (dummyTeljari <= 0) {
             User admin = new User("admin","admin",true);
-            Thread tips1 = new Thread("Íþróttasíða", "Beginner tips & FAQ", "Here are some useful tips..", "badminton");
+            userService.save(admin);
+            Thread tips1 = new Thread("Íþróttasíða", "Beginner t°°ips & FAQ", "Here are some useful tips..", "badminton");
             Thread tips2 = new Thread("Íþróttasíða", "Beginner tips & FAQ", "Here are some useful tips..", "pilukast");
             Thread tips3 = new Thread("Íþróttasíða", "Beginner tips & FAQ", "Here are some useful tips..", "Extreme Ironing");
-            Comment comment = new Comment("admin", "Þetta er flottur þráður!", tips1);
-            threadService.addComment(comment,tips1);
+
             tips1.setPinned(true);
             tips2.setPinned(true);
             tips3.setPinned(true);
