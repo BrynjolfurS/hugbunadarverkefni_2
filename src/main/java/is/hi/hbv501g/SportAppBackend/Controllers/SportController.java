@@ -52,36 +52,4 @@ public class SportController {
 
 
 
-        //-----------------------EVENT---START-------------------------------
-
-    @RequestMapping(value = "/home/{sport}/events/edit/{id}", method = RequestMethod.POST)
-    public String editEvent(@PathVariable("id") Long id,Event event,Model model) {
-        //takes in object and saves changes
-        event.setID(id);
-        sportService.saveEvent(event);
-        return "redirect:/home/{sport}/events/edit";
-    }
-
-    @RequestMapping(value = "/home/{sport}/events/save", method = RequestMethod.POST)
-    public String saveEvent(Event event, Model model) {
-        //takes in object and saves changes
-        System.err.println("Today's date: " + event.getEventDate());
-        sportService.saveEvent(event);
-        return "redirect:/home/{sport}/events";
-    }
-
-    @RequestMapping(value = "/home/{sport}/events/delete/{id}", method = RequestMethod.GET)
-    public String deleteEvent(@PathVariable("id") Long id, Model model) {
-        //takes in object and saves changes
-        sportService.deletEventById(id);
-        return "redirect:/home/{sport}/events/edit";
-    }
-
-    //-----------------------EVENT---END-------------------------------
-
-
-
-
-
-
 }

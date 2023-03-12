@@ -41,8 +41,8 @@ public class ThreadController {
 
     @GetMapping("/allThreads")
     public List<Thread> getAllThreads() {
-        createDummyData();
-        System.out.println("allThreads was called!");
+//        createDummyData();
+//        System.out.println("allThreads was called!");
         return threadService.findAllThreads();
     }
 
@@ -113,6 +113,7 @@ public class ThreadController {
         return "redirect:/home/{sport}";
     }
 
+    // Má henda? Dummydata búið til í NavController
     public void createDummyData() {
         if (dummyTeljari <= 0) {
             User admin = new User("admin","admin",true);

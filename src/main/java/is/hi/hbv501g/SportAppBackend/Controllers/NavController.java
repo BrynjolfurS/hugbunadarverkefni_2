@@ -4,6 +4,7 @@ import is.hi.hbv501g.SportAppBackend.Persistence.Entities.*;
 import is.hi.hbv501g.SportAppBackend.Persistence.Entities.Thread;
 import is.hi.hbv501g.SportAppBackend.Services.SportService;
 import is.hi.hbv501g.SportAppBackend.Services.ThreadService;
+import is.hi.hbv501g.SportAppBackend.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +29,7 @@ public class NavController {
 
     private final SportService sportService;
     private final ThreadService threadService;
+    private final UserService userService;
 
 
     // Return single thread by id from thread service and return json data
@@ -39,9 +41,10 @@ public class NavController {
 
 
     @Autowired
-    public NavController(SportService sportService, ThreadService threadService){
+    public NavController(SportService sportService, ThreadService threadService, UserService userService){
         this.sportService = sportService;
         this.threadService = threadService;
+        this.userService = userService;
         CreateDummyData();
     }
 
@@ -88,14 +91,7 @@ public class NavController {
         return "about"+sport;
     }
 
-    @RequestMapping(value = "/home/{sport}/events", method = RequestMethod.GET)
-    public List<Event> goToEvents(@PathVariable("sport") String sport, Model model) {
-        if(!sportService.isSport(sport)) {
-            System.out.println("Sport not found");
-            return null;
-        }
-        return sportService.findAllEventsBySport(sport);
-    }
+
 
     @RequestMapping(value = "/home/{sport}/clubs", method = RequestMethod.GET)
     public List<Club> goToClubs(@PathVariable("sport") String sport, Model model) {
@@ -176,12 +172,16 @@ public class NavController {
     }
 
     public void CreateDummyData() {
+        User admin = new User("admin","admin",true);
+        userService.save(admin);
         Thread tips1 = new Thread("Íþróttasíða", "Beginner tips & FAQ", "Here are some useful tips..", "badminton");
         Thread tips2 = new Thread("Íþróttasíða", "Beginner tips & FAQ", "Here are some useful tips..", "pilukast");
         Thread tips3 = new Thread("Íþróttasíða", "Beginner tips & FAQ", "Here are some useful tips..", "Extreme Ironing");
         tips1.setPinned(true);
         tips2.setPinned(true);
         tips3.setPinned(true);
+        Comment comment = new Comment("admin", "Þetta er flottur þráður!", tips1);
+        threadService.addComment(comment,tips1);
         threadService.save(tips1);
         threadService.save(tips2);
         threadService.save(tips3);
