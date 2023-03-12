@@ -3,9 +3,9 @@ package is.hi.hbv501g.SportAppBackend.Persistence.Entities;
 
 import javax.persistence.*;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * The Event class contains data about an event related to a specific sport or activity.
@@ -20,16 +20,20 @@ public class Event {
     private long ID;
     private String eventName;
     private String eventDescription;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate eventDate;
+
+    private String eventStartTime;
+    private LocalDateTime eventDate;
     private String sport;
+//    private List<Long> subscribers = new ArrayList<Long>();;
 
     //------------------test-------------------------------
-    public Event(String eventName, String eventDescription ,String sport, LocalDate date) {
+    public Event(String eventName, String eventDescription ,String sport, LocalDateTime date) {
         this.eventName = eventName;
         this.eventDescription = eventDescription;
         this.sport = sport;
         this.eventDate = date;
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy MM dd HH:mm");
+        this.eventStartTime = date.format(f);
     }
     //------------------test end-------------------------------
 
@@ -60,16 +64,18 @@ public class Event {
         this.eventDescription = eventDescription;
     }
 
-    public LocalDate getEventDate() {
-        return eventDate;
+    public String geteventStartTime() {
+        return eventStartTime;
     }
 
-    public void setEventDate(LocalDate eventDate) {
-        this.eventDate = eventDate;
+    public void seteventStartTime(String eventDate) {
+        this.eventStartTime = eventDate;
     }
 
     public String getSport(){return sport;}
     public void setSport(String sport){this.sport=sport;}
 
-
+//    public void addSubscriber(Long l) {this.subscribers.add(l);}
+//
+//    public List<Long> getSubscribers() {return subscribers;}
 }

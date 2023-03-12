@@ -8,13 +8,12 @@ import is.hi.hbv501g.SportAppBackend.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.Collections;
 import java.util.List;
 
@@ -158,6 +157,11 @@ public class NavController {
         return ;
     }*/
 
+    @GetMapping("/sports")
+    public List<String> getAllSports() {
+        return sportService.findAllSports();
+    }
+
 
    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String goToLogin() {
@@ -190,10 +194,10 @@ public class NavController {
             threadService.save(new Thread("User", "Dummy Thread " + i, "Dummy Body", "badminton"));
             threadService.save(new Thread("User", "Dummy Thread " + i, "Dummy Body", "pilukast"));
             threadService.save(new Thread("User", "Dummy Thread " + i, "Dummy Body", "Extreme Ironing"));
-            sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "badminton", LocalDate.of(2022,i+1,1+i*2)));
-            sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "pilukast", LocalDate.of(2022,i+1,1+i*2)));
-            sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "Extreme Ironing", LocalDate.of(2022,i+1,1+i*2)));
-            sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "bogfimi", LocalDate.of(2022,i+1,1+i*2)));
+            sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "badminton", LocalDateTime.of(2022,Month.of(i+1),1+i*2,i+2,i+10)));
+            sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "pilukast", LocalDateTime.of(2022,Month.of(i+1),1+i*2,i+1,i+20)));
+            sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "Extreme Ironing", LocalDateTime.of(2022,Month.of(i+1),1+i*2,i+3,i+30)));
+            sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "bogfimi", LocalDateTime.of(2022,Month.of(i+1),1+i*2,i+6,i+15)));
         }
         sportService.saveClub(new Club("Badmintonfélag Hafnarfjarðar", "https://www.badmintonfelag.is/", "bh@bhbadminton.is",
                 "Strandgötu 53, 220 Hafnarfirði",

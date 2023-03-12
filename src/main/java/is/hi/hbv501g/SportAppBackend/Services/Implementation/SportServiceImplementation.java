@@ -29,6 +29,7 @@ public class SportServiceImplementation implements SportService {
 
     @Override
     public List<String> findAllSports() {
+        // TODO: Gera þetta dýnamískt
         List<String> sport = new ArrayList<String>();
         sport.add("badminton");
         sport.add("pilukast");

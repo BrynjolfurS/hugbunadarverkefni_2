@@ -110,16 +110,6 @@ public class UserController {
         return user;
     }
 
-    /**
-     * Handles requests for logging into a specific user account.
-     * Verification is delegated to the User service.
-     * @param user Contains the username and password for the user account.
-     * @param result Holds result of the binding and contains possible errors.
-     * @param model Will contain the user data if the User service approves log in attempt.
-     * @param session Will contain the user data if the User service approves log in attempt.
-     * @return Redirect back to the home page.
-     */
-
     /*
     @RequestMapping(value="/login", method = RequestMethod.POST)
     public String loginPOST(User user, BindingResult result, Model model, HttpSession session) {
@@ -136,12 +126,24 @@ public class UserController {
     }*/
 
     @PostMapping("/login")
-    public boolean loginPOST(String username, String password) {
-        User user = userService.findByUsername(username);
-        if (user.getUserPassword().equals(password)) {
-            user.setLoggedIn(true);
+    public User loginPOST(String username, String password) {
+        try {
+            User user = userService.findByUsername(username);
+            if (user.getUserPassword().equals(password)) {
+                user.setLoggedIn(true);
+                return user;
+            }
+        } catch (Exception e) {
+            return null;
         }
-        return user.isLoggedIn();
+        return null;
+    }
+
+    @PostMapping("/logout")
+    public void logout(String username) {
+        User user = userService.findByUsername(username);
+        user.setLoggedIn(false);
+        userService.save(user);
     }
 
     /**
@@ -149,10 +151,17 @@ public class UserController {
      * @param session User data will be removed from the session object.
      * @return Redirect back to the home page.
      */
+    /*
     @RequestMapping(value="/logout", method = RequestMethod.POST)
     public String logOut(HttpSession session) {
         session.removeAttribute("LoggedInUser");
         return "redirect:/home";
+    }*/
+
+    @GetMapping("/userInfo")
+    public User getUserInfo(String username) {
+        User user = userService.findByUsername(username);
+        return user;
     }
 
     @RequestMapping(value="/loggedin", method = RequestMethod.GET)

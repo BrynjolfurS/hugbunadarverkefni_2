@@ -5,10 +5,7 @@ import is.hi.hbv501g.SportAppBackend.Services.EventService;
 import is.hi.hbv501g.SportAppBackend.Services.SportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,13 +29,27 @@ public class EventController {
         this.sportService = sportService;
     }
 
+    @RequestMapping(value = "/event/{id}", method = RequestMethod.GET)
+    public Event getEventById(@PathVariable("id") Long id) {
+        Event event = eventService.findEventById(id);
+        return event;
+    }
+
+//    @PostMapping("/event/{id}")
+//    public String subscribeToEvent(@PathVariable("id") Long id, @RequestParam Long userId) {
+//        Event event = eventService.findEventById(id);
+//        event.addSubscriber(userId);
+//        eventService.save(event);
+//        return "Successfully subscribed to event!";
+//    }
+
     @RequestMapping(value = "/home/{sport}/events", method = RequestMethod.GET)
     public List<Event> goToEvents(@PathVariable("sport") String sport, Model model) {
         if (!sportService.isSport(sport)) {
             System.out.println("Sport not found");
             return null;
         }
-        return eventService.findAllEventsBySport(sport);
+        return eventService.findBySport(sport);
     }
 
     @RequestMapping(value = "/home/{sport}/events/edit/{id}", method = RequestMethod.POST)
@@ -52,7 +63,7 @@ public class EventController {
     @RequestMapping(value = "/home/{sport}/events/save", method = RequestMethod.POST)
     public String saveEvent(Event event, Model model) {
         //takes in object and saves changes
-        System.err.println("Today's date: " + event.getEventDate());
+        System.err.println("Today's date: " + event.geteventStartTime());
         eventService.save(event);
         return "redirect:/home/{sport}/events";
     }
