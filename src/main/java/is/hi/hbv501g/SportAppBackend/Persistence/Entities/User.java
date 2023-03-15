@@ -68,6 +68,7 @@ public class User {
         this.username = username;
         this.userPassword = userPassword;
         this.isAdmin = isAdmin;
+
     }
 
 //    public User(String username, String userPassword, boolean isAdmin, List<Comment> comments) {

@@ -177,6 +177,7 @@ public class NavController {
 
     public void CreateDummyData() {
         User admin = new User("admin","admin",true);
+        userService.save(new User("notAdmin","notAdmin",false));
         userService.save(admin);
         Thread tips1 = new Thread("Íþróttasíða", "Beginner tips & FAQ", "Here are some useful tips..", "badminton");
         Thread tips2 = new Thread("Íþróttasíða", "Beginner tips & FAQ", "Here are some useful tips..", "pilukast");

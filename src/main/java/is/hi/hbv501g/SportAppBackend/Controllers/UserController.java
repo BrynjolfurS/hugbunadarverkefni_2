@@ -164,6 +164,25 @@ public class UserController {
         return user;
     }
 
+    @PostMapping("/checkUsername")
+    public boolean checkUsernameExists(@RequestParam String username) {
+        return userService.findByUsername(username) != null;
+    }
+
+    @PostMapping("/register")
+    public User register(@RequestParam String username, @RequestParam String password) {
+        User user = new User(username, password, false);
+        try {
+            if (userService.findByUsername(username) != null) {
+                return null;
+            }
+            userService.save(user);
+            return user;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     @RequestMapping(value="/loggedin", method = RequestMethod.GET)
     public String loggedinGET(HttpSession session, Model model) {
         User sessionUser = (User) session.getAttribute("LoggedInUser");
