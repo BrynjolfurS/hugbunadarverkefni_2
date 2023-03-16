@@ -4,6 +4,7 @@ package is.hi.hbv501g.SportAppBackend.Persistence.Entities;
 import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,6 +23,35 @@ public class User {
     private String userPassword;
     private boolean isAdmin;
 
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    private boolean isBanned;
+
+    public boolean isBanned() {
+        return isBanned;
+    }
+
+    public void setBanned(boolean banned) {
+        isBanned = banned;
+    }
+
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
+    /*
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }*/
+
+
     public boolean isLoggedIn() {
         return loggedIn;
     }
@@ -32,8 +62,10 @@ public class User {
 
     @JsonManagedReference
     private boolean loggedIn;
+
+    /*
     @JsonManagedReference
-    private List<Comment> comments;
+    private List<Comment> comments;*/
 
     public User() {
     }
@@ -68,7 +100,6 @@ public class User {
         this.username = username;
         this.userPassword = userPassword;
         this.isAdmin = isAdmin;
-
     }
 
 //    public User(String username, String userPassword, boolean isAdmin, List<Comment> comments) {
