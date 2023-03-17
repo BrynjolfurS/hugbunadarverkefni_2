@@ -25,10 +25,17 @@ public class Thread implements Comparable<Thread> {
     private String body;
     private LocalDate date;
     private String sport;
-    public Thread() {
+
+    public String getUsername() {
+        return username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
+    public Thread() {
+    }
 
     public Thread(String user, String header, String body, String sport) {
         this.username = user;

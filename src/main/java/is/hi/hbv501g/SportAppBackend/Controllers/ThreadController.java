@@ -49,6 +49,21 @@ public class ThreadController {
         return threadService.findAllThreads();
     }
 
+    @PostMapping("/saveThread")
+    public Thread saveThread(@RequestParam String title, @RequestParam String body, @RequestParam String sport, @RequestParam String user) {
+        if (userService.findByUsername(user) != null) {
+            Thread thread = new Thread();
+            thread.setHeader(title);
+            thread.setBody(body);
+            thread.setSport(sport);
+            thread.setUser(userService.findByUsername(user).getUsername());
+            thread.setDate(LocalDate.now());
+            threadService.save(thread);
+            return thread;
+        }
+        return null;
+    }
+
     @PostMapping("/newComment")
     public String addComment(@RequestParam String userId, @RequestParam String commentBody, @RequestParam String threadId) {
         User poster = userService.findByID(Long.valueOf(userId));

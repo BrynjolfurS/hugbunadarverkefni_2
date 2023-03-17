@@ -129,7 +129,7 @@ public class UserController {
     public User loginPOST(String username, String password) {
         try {
             User user = userService.findByUsername(username);
-            if (user.getUserPassword().equals(password)) {
+            if (user.getUserPassword().equals(password) && !user.isBanned()) {
                 user.setLoggedIn(true);
                 return user;
             }
@@ -146,11 +146,6 @@ public class UserController {
         userService.save(user);
     }
 
-    /**
-     * Handles requests for logging out a currently logged-in user.
-     * @param session User data will be removed from the session object.
-     * @return Redirect back to the home page.
-     */
     /*
     @RequestMapping(value="/logout", method = RequestMethod.POST)
     public String logOut(HttpSession session) {
@@ -162,6 +157,25 @@ public class UserController {
     public User getUserInfo(String username) {
         User user = userService.findByUsername(username);
         return user;
+    }
+
+    @PostMapping("/checkUsername")
+    public boolean checkUsernameExists(@RequestParam String username) {
+        return userService.findByUsername(username) != null;
+    }
+
+    @PostMapping("/register")
+    public User register(@RequestParam String username, @RequestParam String password) {
+        User user = new User(username, password, false);
+        try {
+            if (userService.findByUsername(username) != null) {
+                return null;
+            }
+            userService.save(user);
+            return user;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @RequestMapping(value="/loggedin", method = RequestMethod.GET)

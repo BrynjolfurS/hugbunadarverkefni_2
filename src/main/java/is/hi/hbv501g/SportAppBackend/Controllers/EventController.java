@@ -46,7 +46,7 @@ public class EventController {
     @RequestMapping(value = "/home/{sport}/events", method = RequestMethod.GET)
     public List<Event> goToEvents(@PathVariable("sport") String sport, Model model) {
         if (!sportService.isSport(sport)) {
-            System.out.println("Sport not found");
+            System.out.println("Sport not found: " + sport);
             return null;
         }
         return eventService.findBySport(sport);
