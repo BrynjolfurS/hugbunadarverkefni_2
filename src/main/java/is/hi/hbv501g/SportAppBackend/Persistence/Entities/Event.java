@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 /**
  * The Event class contains data about an event related to a specific sport or activity.
@@ -24,7 +25,7 @@ public class Event {
     private String eventStartTime;
     private LocalDateTime eventDate;
     private String sport;
-//    private List<Long> subscribers = new ArrayList<Long>();;
+//    private List<User> subscribers = new List<User>();
 
     //------------------test-------------------------------
     public Event(String eventName, String eventDescription ,String sport, LocalDateTime date) {
