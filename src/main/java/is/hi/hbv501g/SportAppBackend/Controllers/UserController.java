@@ -139,6 +139,22 @@ public class UserController {
         return null;
     }
 
+    @PutMapping("/banUser/{username}")
+    public User banUser(@PathVariable("username") String username) {
+        User userToBan = userService.findByUsername(username);
+        userToBan.setBanned(true);
+        userService.save(userToBan);
+        return userToBan;
+    }
+
+    @PutMapping("/unbanUser/{username}")
+    public User unbanUser(@PathVariable("username") String username) {
+        User userToUnban = userService.findByUsername(username);
+        userToUnban.setBanned(false);
+        userService.save(userToUnban);
+        return userToUnban;
+    }
+
     @PostMapping("/logout")
     public void logout(String username) {
         User user = userService.findByUsername(username);
@@ -153,10 +169,16 @@ public class UserController {
         return "redirect:/home";
     }*/
 
-    @GetMapping("/userInfo")
-    public User getUserInfo(String username) {
+    @GetMapping("/userInfo/{username}")
+    public User getUserInfo(@PathVariable String username) {
         User user = userService.findByUsername(username);
         return user;
+    }
+
+    @GetMapping("/userInfo/{username}/isBanned")
+    public boolean isBanned(@PathVariable String username) {
+        User user = userService.findByUsername(username);
+        return user.isBanned();
     }
 
     @PostMapping("/checkUsername")
