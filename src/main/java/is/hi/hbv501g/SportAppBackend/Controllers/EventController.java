@@ -35,6 +35,21 @@ public class EventController {
         return event;
     }
 
+    @PostMapping("/saveEvent")
+    public Event saveEvent(
+            @RequestParam String title,
+            @RequestParam String description,
+            @RequestParam String sport,
+            @RequestParam String startingDate) {
+        Event event = new Event();
+        event.setEventName(title);
+        event.setEventDescription(description);
+        event.setSport(sport);
+        event.seteventStartTime(startingDate);
+        eventService.save(event);
+        return event;
+    }
+
 //    @PostMapping("/event/{id}")
 //    public String subscribeToEvent(@PathVariable("id") Long id, @RequestParam Long userId) {
 //        Event event = eventService.findEventById(id);
@@ -60,13 +75,13 @@ public class EventController {
         return "redirect:/home/{sport}/events/edit";
     }
 
-    @RequestMapping(value = "/home/{sport}/events/save", method = RequestMethod.POST)
-    public String saveEvent(Event event, Model model) {
-        //takes in object and saves changes
-        System.err.println("Today's date: " + event.geteventStartTime());
-        eventService.save(event);
-        return "redirect:/home/{sport}/events";
-    }
+//    @RequestMapping(value = "/home/{sport}/events/save", method = RequestMethod.POST)
+//    public String saveEvent(Event event, Model model) {
+//        //takes in object and saves changes
+//        System.err.println("Today's date: " + event.geteventStartTime());
+//        eventService.save(event);
+//        return "redirect:/home/{sport}/events";
+//    }
 
     @RequestMapping(value = "/home/{sport}/events/delete/{id}", method = RequestMethod.GET)
     public String deleteEvent(@PathVariable("id") Long id, Model model) {

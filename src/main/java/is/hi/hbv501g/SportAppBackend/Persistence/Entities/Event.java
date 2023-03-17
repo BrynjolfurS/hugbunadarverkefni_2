@@ -71,6 +71,8 @@ public class Event {
 
     public void seteventStartTime(String eventDate) {
         this.eventStartTime = eventDate;
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy MM dd HH:mm");
+        this.eventDate = LocalDateTime.parse(eventDate, f);
     }
 
     public String getSport(){return sport;}
