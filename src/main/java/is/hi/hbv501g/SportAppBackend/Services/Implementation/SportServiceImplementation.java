@@ -2,6 +2,7 @@ package is.hi.hbv501g.SportAppBackend.Services.Implementation;
 
 import is.hi.hbv501g.SportAppBackend.Persistence.Entities.Club;
 import is.hi.hbv501g.SportAppBackend.Persistence.Entities.Event;
+import is.hi.hbv501g.SportAppBackend.Persistence.Entities.SportModerator;
 import is.hi.hbv501g.SportAppBackend.Persistence.Repositories.ClubRepository;
 import is.hi.hbv501g.SportAppBackend.Persistence.Repositories.EventRepository;
 import is.hi.hbv501g.SportAppBackend.Services.SportService;
@@ -17,15 +18,14 @@ public class SportServiceImplementation implements SportService {
 
     private EventRepository eventRepository;
     private ClubRepository clubRepository;
+    private SportModeratorRepository sportModeratorRepository;
 
     @Autowired
-    public SportServiceImplementation(EventRepository eventRepository, ClubRepository clubRepository) {
+    public SportServiceImplementation(EventRepository eventRepository, ClubRepository clubRepository, SportModeratorRepository sportModeratorRepository) {
         this.clubRepository = clubRepository;
         this.eventRepository = eventRepository;
+        this.sportModeratorRepository = sportModeratorRepository;
     }
-
-
-
 
     @Override
     public List<String> findAllSports() {
