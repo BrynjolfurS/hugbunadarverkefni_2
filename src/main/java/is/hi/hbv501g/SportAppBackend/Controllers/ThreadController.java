@@ -2,10 +2,7 @@ package is.hi.hbv501g.SportAppBackend.Controllers;
 
 import is.hi.hbv501g.SportAppBackend.Persistence.Entities.*;
 import is.hi.hbv501g.SportAppBackend.Persistence.Entities.Thread;
-import is.hi.hbv501g.SportAppBackend.Services.CommentService;
-import is.hi.hbv501g.SportAppBackend.Services.SportService;
-import is.hi.hbv501g.SportAppBackend.Services.ThreadService;
-import is.hi.hbv501g.SportAppBackend.Services.UserService;
+import is.hi.hbv501g.SportAppBackend.Services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,15 +17,17 @@ public class ThreadController {
     private final ThreadService threadService;
     private final UserService userService;
     private final CommentService commentService;
+    private final MessageService messageService;
 
     // Má Deleta seinna: Kemur í veg fyrir að dummy gögn séu endalaust búin til
     private int dummyTeljari = 0;
 
     @Autowired
-    public ThreadController(ThreadService threadService, SportService sportService, UserService userService, CommentService commentService) {
+    public ThreadController(ThreadService threadService, SportService sportService, UserService userService, CommentService commentService, MessageService messageService) {
         this.commentService = commentService;
         this.threadService = threadService;
         this.userService = userService;
+        this.messageService = messageService;
     }
 
 //    @GetMapping("/home/{sport}/thread/{id}")
@@ -64,13 +63,41 @@ public class ThreadController {
         return null;
     }
 
+
+    // TODO: Bæta við að taka inn thread owner til að senda honum skilaboð
+    // TODO: Finna útfrá threadId hver postaði þræðinum og setja það í message
     @PostMapping("/newComment")
     public String addComment(@RequestParam String username, @RequestParam String commentBody, @RequestParam String threadId) {
         User poster = userService.findByUsername(username);
+        System.out.println("Thread ID: " + threadId);
         Thread threadPostedIn = threadService.findThreadById(Long.valueOf(threadId));
+        User threadOwner = userService.findByUsername(threadPostedIn.getUsername());
         Comment newComment = new Comment(poster.getUsername(), commentBody, threadPostedIn);
         threadService.addComment(newComment, threadPostedIn);
+
+        if (threadOwner != null) {
+            Message message = new Message(poster.getUsername() + " commented on your thread " + threadPostedIn.getHeader(), threadOwner, false);
+            messageService.save(message);
+        }
+
         return "Comment successfully posted!";
+    }
+
+    @PutMapping("userInfo/{username}/messages/{id}")
+    public void updateMessage(@PathVariable String username, @PathVariable Long id) {
+        Message message = messageService.findById(id);
+        message.setX(true);
+        messageService.save(message);
+    }
+
+    @GetMapping("/userInfo/{username}/messages")
+    public List<Message> getMessages(@PathVariable String username) {
+        User user = userService.findByUsername(username);
+        List<Message> messages = messageService.findByUsername(user.getUsername());
+        if (messages != null) {
+            return messages;
+        }
+        return null;
     }
 
     @DeleteMapping("/comments/{id}/delete")
