@@ -2,6 +2,7 @@ package is.hi.hbv501g.SportAppBackend.Controllers;
 
 import is.hi.hbv501g.SportAppBackend.Persistence.Entities.*;
 import is.hi.hbv501g.SportAppBackend.Persistence.Entities.Thread;
+import is.hi.hbv501g.SportAppBackend.Services.MessageService;
 import is.hi.hbv501g.SportAppBackend.Services.SportService;
 import is.hi.hbv501g.SportAppBackend.Services.ThreadService;
 import is.hi.hbv501g.SportAppBackend.Services.UserService;
@@ -29,6 +30,7 @@ public class NavController {
     private final SportService sportService;
     private final ThreadService threadService;
     private final UserService userService;
+    private final MessageService messageService;
 
 
     // Return single thread by id from thread service and return json data
@@ -40,10 +42,11 @@ public class NavController {
 
 
     @Autowired
-    public NavController(SportService sportService, ThreadService threadService, UserService userService){
+    public NavController(SportService sportService, ThreadService threadService, UserService userService, MessageService messageService) {
         this.sportService = sportService;
         this.threadService = threadService;
         this.userService = userService;
+        this.messageService = messageService;
         CreateDummyData();
     }
 
@@ -179,9 +182,9 @@ public class NavController {
         User admin = new User("admin","admin",true);
         userService.save(new User("notAdmin","notAdmin",false));
         userService.save(admin);
-        Thread tips1 = new Thread("Íþróttasíða", "Beginner tips & FAQ", "Here are some useful tips..", "badminton");
-        Thread tips2 = new Thread("Íþróttasíða", "Beginner tips & FAQ", "Here are some useful tips..", "pilukast");
-        Thread tips3 = new Thread("Íþróttasíða", "Beginner tips & FAQ", "Here are some useful tips..", "Extreme Ironing");
+        Thread tips1 = new Thread("admin", "Beginner tips & FAQ", "Here are some useful tips..", "badminton");
+        Thread tips2 = new Thread("admin", "Beginner tips & FAQ", "Here are some useful tips..", "pilukast");
+        Thread tips3 = new Thread("admin", "Beginner tips & FAQ", "Here are some useful tips..", "Extreme Ironing");
         tips1.setPinned(true);
         tips2.setPinned(true);
         tips3.setPinned(true);
@@ -192,9 +195,9 @@ public class NavController {
         threadService.save(tips3);
 
         for (int i = 0; i < 10; i++) {
-            threadService.save(new Thread("User", "Dummy Thread " + i, "Dummy Body", "badminton"));
-            threadService.save(new Thread("User", "Dummy Thread " + i, "Dummy Body", "pilukast"));
-            threadService.save(new Thread("User", "Dummy Thread " + i, "Dummy Body", "Extreme Ironing"));
+            threadService.save(new Thread("admin", "Dummy Thread " + i, "Dummy Body", "badminton"));
+            threadService.save(new Thread("admin", "Dummy Thread " + i, "Dummy Body", "pilukast"));
+            threadService.save(new Thread("admin", "Dummy Thread " + i, "Dummy Body", "Extreme Ironing"));
             sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "badminton", LocalDateTime.of(2022,Month.of(i+1),1+i*2,i+2,i+10)));
             sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "pilukast", LocalDateTime.of(2022,Month.of(i+1),1+i*2,i+1,i+20)));
             sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "Extreme Ironing", LocalDateTime.of(2022,Month.of(i+1),1+i*2,i+3,i+30)));

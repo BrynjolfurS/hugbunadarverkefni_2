@@ -21,6 +21,18 @@ public class User {
     private String username;
     
     private String userPassword;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
+    }
+
+    private List<Message> messages = new ArrayList<>();
     private boolean isAdmin;
 
     public boolean isAdmin() {
