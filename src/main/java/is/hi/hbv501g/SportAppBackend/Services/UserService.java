@@ -1,5 +1,6 @@
 package is.hi.hbv501g.SportAppBackend.Services;
 
+import is.hi.hbv501g.SportAppBackend.Persistence.Entities.SportModerator;
 import is.hi.hbv501g.SportAppBackend.Persistence.Entities.User;
 
 import java.util.List;

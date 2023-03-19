@@ -24,9 +24,6 @@ public class SportServiceImplementation implements SportService {
         this.eventRepository = eventRepository;
     }
 
-
-
-
     @Override
     public List<String> findAllSports() {
         // TODO: Gera þetta dýnamískt

@@ -65,8 +65,8 @@ public class ThreadController {
     }
 
     @PostMapping("/newComment")
-    public String addComment(@RequestParam String userId, @RequestParam String commentBody, @RequestParam String threadId) {
-        User poster = userService.findByID(Long.valueOf(userId));
+    public String addComment(@RequestParam String username, @RequestParam String commentBody, @RequestParam String threadId) {
+        User poster = userService.findByUsername(username);
         Thread threadPostedIn = threadService.findThreadById(Long.valueOf(threadId));
         Comment newComment = new Comment(poster.getUsername(), commentBody, threadPostedIn);
         threadService.addComment(newComment, threadPostedIn);

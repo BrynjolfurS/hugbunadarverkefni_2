@@ -1,6 +1,8 @@
 package is.hi.hbv501g.SportAppBackend.Controllers;
 
+import is.hi.hbv501g.SportAppBackend.Persistence.Entities.SportModerator;
 import is.hi.hbv501g.SportAppBackend.Persistence.Entities.User;
+import is.hi.hbv501g.SportAppBackend.Services.SportModeratorService;
 import is.hi.hbv501g.SportAppBackend.Services.UserService;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +22,12 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     UserService userService;
+    SportModeratorService sportModeratorService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, SportModeratorService sportModeratorService) {
         this.userService = userService;
+        this.sportModeratorService = sportModeratorService;
     }
 
     /**
@@ -173,6 +177,15 @@ public class UserController {
     public User getUserInfo(@PathVariable String username) {
         User user = userService.findByUsername(username);
         return user;
+    }
+
+
+    @GetMapping("/userInfo/{username}/moderates/{sport}")
+    public boolean getIsModeratorForSport(@PathVariable String username, @PathVariable String sport) {
+        System.out.println(sport);
+        System.out.println(username);
+        System.out.println(sportModeratorService.findSportModeratorByUsernameAndSportName(username, sport));
+        return sportModeratorService.findSportModeratorByUsernameAndSportName(username, sport) != null;
     }
 
     @GetMapping("/userInfo/{username}/isBanned")

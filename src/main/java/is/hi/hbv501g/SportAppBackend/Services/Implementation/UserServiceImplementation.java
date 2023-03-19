@@ -1,5 +1,6 @@
 package is.hi.hbv501g.SportAppBackend.Services.Implementation;
 
+import is.hi.hbv501g.SportAppBackend.Persistence.Entities.SportModerator;
 import is.hi.hbv501g.SportAppBackend.Persistence.Entities.User;
 import is.hi.hbv501g.SportAppBackend.Persistence.Repositories.UserRepository;
 import is.hi.hbv501g.SportAppBackend.Services.UserService;

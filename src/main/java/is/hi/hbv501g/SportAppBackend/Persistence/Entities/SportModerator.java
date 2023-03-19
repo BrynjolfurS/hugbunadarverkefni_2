@@ -2,25 +2,55 @@ package is.hi.hbv501g.SportAppBackend.Persistence.Entities;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "moderators")
 public class SportModerator {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private long ID;
-    private String sport;
+
+
+    private String sportName;
     private String username;
+
+    private List<Sport> sports = new ArrayList<>();
+
+    public String getSportName() {
+        return sportName;
+    }
+
+    public void setSportName(String sportName) {
+        this.sportName = sportName;
+    }
+
+    @OneToMany(mappedBy = "sport", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Column(name = "sport")
+    public List<Sport> getSports() {
+        if (sports != null) return sports;
+        return new ArrayList<>();
+    }
+
+    public void addSport(Sport sport) {
+        this.sports.add(sport);
+    }
+
+    public void setSports(List<Sport> sports) {
+        this.sports = sports;
+    }
 
     public SportModerator() {
     }
 
-    public SportModerator(String sport, String username) {
-        this.sport = sport;
+    public SportModerator(String sportName, String username) {
+        this.sportName = sportName;
         this.username = username;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long getID() {
         return ID;
     }
@@ -28,15 +58,6 @@ public class SportModerator {
     public void setID(long ID) {
         this.ID = ID;
     }
-
-    public String getSport() {
-        return sport;
-    }
-
-    public void setSport(String sport) {
-        this.sport = sport;
-    }
-
     public String getUsername() {
         return username;
     }
