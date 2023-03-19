@@ -1,5 +1,6 @@
 package is.hi.hbv501g.SportAppBackend.Persistence.Repositories;
 
+import is.hi.hbv501g.SportAppBackend.Persistence.Entities.SportModerator;
 import is.hi.hbv501g.SportAppBackend.Persistence.Entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 

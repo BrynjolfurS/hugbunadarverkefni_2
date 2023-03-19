@@ -20,11 +20,6 @@ public class SportController {
 
     }
 
-    @GetMapping(value = "/userInfo/{username}/moderates/{sport}")
-    public boolean isModerator(@PathVariable String username, @PathVariable String sport){
-        return false; // TODO: Implement this method
-    }
-
 
 //-----------------------CLUBS---START-------------------------------
 
