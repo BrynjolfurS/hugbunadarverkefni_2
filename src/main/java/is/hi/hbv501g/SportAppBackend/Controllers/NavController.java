@@ -1,11 +1,9 @@
 package is.hi.hbv501g.SportAppBackend.Controllers;
 
+import com.google.firebase.messaging.FirebaseMessagingException;
 import is.hi.hbv501g.SportAppBackend.Persistence.Entities.*;
 import is.hi.hbv501g.SportAppBackend.Persistence.Entities.Thread;
-import is.hi.hbv501g.SportAppBackend.Services.MessageService;
-import is.hi.hbv501g.SportAppBackend.Services.SportService;
-import is.hi.hbv501g.SportAppBackend.Services.ThreadService;
-import is.hi.hbv501g.SportAppBackend.Services.UserService;
+import is.hi.hbv501g.SportAppBackend.Services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +18,7 @@ import java.util.List;
 
 /**
  * The NavController handles general navigation between the webpage's different sections.
- * Therefore it exclusively handles HTTP requests of type 'GET' and constructs a response by asking the
+ * Therefore, it exclusively handles HTTP requests of type 'GET' and constructs a response by asking the
  * appropriate service for the data needed.
  *
  */
@@ -32,14 +30,11 @@ public class NavController {
     private final UserService userService;
     private final MessageService messageService;
 
-
     // Return single thread by id from thread service and return json data
     @RequestMapping(value = "/home/{sport}/thread/{id}", method = RequestMethod.GET)
     public Thread getThreadById(@PathVariable Long id) {
         return threadService.findThreadById(id);
     }
-
-
 
     @Autowired
     public NavController(SportService sportService, ThreadService threadService, UserService userService, MessageService messageService) {
@@ -98,7 +93,6 @@ public class NavController {
     @RequestMapping(value = "/home/{sport}/clubs", method = RequestMethod.GET)
     public List<Club> goToClubs(@PathVariable("sport") String sport, Model model) {
         if(!sportService.isSport(sport)) {
-            System.out.println("Sport not found");
             return null;
 
         }

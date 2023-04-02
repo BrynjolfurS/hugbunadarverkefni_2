@@ -4,17 +4,25 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 
-
 @Entity
 @Table(name = "messages")
 public class Message {
     private long Id;
     private String message;
 
-
+    private String msgType;
 
     private String username;
 
+    private String threadCreator;
+
+    public String getThreadCreator() {
+        return threadCreator;
+    }
+
+    public void setThreadCreator(String threadCreator) {
+        this.threadCreator = threadCreator;
+    }
 
     public String getUsername() {
         return user.getUsername();
@@ -50,23 +58,37 @@ public class Message {
         return user;
     }
 
-    public Message(String message, User user, boolean x) {
+    public Message(String message, User user, boolean x, String threadCreator, String type) {
         this.message = message;
+        this.msgType = type;
+        this.user = user;
+        this.x = x;
+        this.threadCreator = threadCreator;
+    }
+
+    public Message(String message, User user, boolean x, String type, String event, String eventDate) {
+        this.message = message;
+        this.msgType = type;
         this.user = user;
         this.x = x;
     }
+
+    private User user;
 
     public void setUser(User user) {
         this.user = user;
     }
 
     public Message() {
+        // Required empty public constructor
     }
 
-    private User user;
 
+    // Veit að þetta er ruglandi, en af einhverri vangefinni ástæðu vildi þetta
+    // ekki keyra þegar ég reyndi að kalla þetta isRead, read, beenRead etc.
     private boolean x;
 
+    // Þetta er = messageBeenRead, read, beenRead etc.
     public boolean isX() {
         return x;
     }
