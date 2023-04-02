@@ -35,6 +35,11 @@ public class EventController {
         return event;
     }
 
+    @GetMapping("/allEvents")
+    public List<Event> getAllEvents() {
+        return eventService.findAll();
+    }
+
     @PostMapping("/saveEvent")
     public Event saveEvent(
             @RequestParam String title,
@@ -45,7 +50,7 @@ public class EventController {
         event.setEventName(title);
         event.setEventDescription(description);
         event.setSport(sport);
-        event.seteventStartTime(startingDate);
+        event.setEventStartTime(startingDate);
         eventService.save(event);
         return event;
     }

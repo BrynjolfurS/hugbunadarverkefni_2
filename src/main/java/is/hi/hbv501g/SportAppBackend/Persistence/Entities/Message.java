@@ -4,12 +4,13 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 
-
 @Entity
 @Table(name = "messages")
 public class Message {
     private long Id;
     private String message;
+
+    private String msgType;
 
     private String username;
 
@@ -57,11 +58,19 @@ public class Message {
         return user;
     }
 
-    public Message(String message, User user, boolean x, String threadCreator) {
+    public Message(String message, User user, boolean x, String threadCreator, String type) {
         this.message = message;
+        this.msgType = type;
         this.user = user;
         this.x = x;
         this.threadCreator = threadCreator;
+    }
+
+    public Message(String message, User user, boolean x, String type, String event, String eventDate) {
+        this.message = message;
+        this.msgType = type;
+        this.user = user;
+        this.x = x;
     }
 
     private User user;

@@ -75,12 +75,14 @@ public class ThreadController {
         threadService.addComment(newComment, threadPostedIn);
 
         if (threadOwner != null) {
-            Message message = new Message(poster.getUsername() + " commented on your thread " + threadPostedIn.getHeader(), threadOwner, false, threadOwner.getUsername());
+            Message message = new Message(poster.getUsername() + " commented on your thread " + threadPostedIn.getHeader(), threadOwner, false, threadOwner.getUsername(), "new_comment");
             messageService.save(message);
         }
 
         return "Comment successfully posted!";
     }
+
+
 
     @PutMapping("userInfo/{username}/messages/{id}")
     public void updateMessage(@PathVariable String username, @PathVariable Long id) {
