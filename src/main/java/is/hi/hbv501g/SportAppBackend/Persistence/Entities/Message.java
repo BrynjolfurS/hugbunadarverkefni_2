@@ -11,10 +11,17 @@ public class Message {
     private long Id;
     private String message;
 
-
-
     private String username;
 
+    private String threadCreator;
+
+    public String getThreadCreator() {
+        return threadCreator;
+    }
+
+    public void setThreadCreator(String threadCreator) {
+        this.threadCreator = threadCreator;
+    }
 
     public String getUsername() {
         return user.getUsername();
@@ -50,23 +57,29 @@ public class Message {
         return user;
     }
 
-    public Message(String message, User user, boolean x) {
+    public Message(String message, User user, boolean x, String threadCreator) {
         this.message = message;
         this.user = user;
         this.x = x;
+        this.threadCreator = threadCreator;
     }
+
+    private User user;
 
     public void setUser(User user) {
         this.user = user;
     }
 
     public Message() {
+        // Required empty public constructor
     }
 
-    private User user;
 
+    // Veit að þetta er ruglandi, en af einhverri vangefinni ástæðu vildi þetta
+    // ekki keyra þegar ég reyndi að kalla þetta isRead, read, beenRead etc.
     private boolean x;
 
+    // Þetta er = messageBeenRead, read, beenRead etc.
     public boolean isX() {
         return x;
     }

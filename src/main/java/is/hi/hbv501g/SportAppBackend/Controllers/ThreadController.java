@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -44,7 +45,6 @@ public class ThreadController {
     @GetMapping("/allThreads")
     public List<Thread> getAllThreads() {
 //        createDummyData();
-//        System.out.println("allThreads was called!");
         return threadService.findAllThreads();
     }
 
@@ -69,14 +69,13 @@ public class ThreadController {
     @PostMapping("/newComment")
     public String addComment(@RequestParam String username, @RequestParam String commentBody, @RequestParam String threadId) {
         User poster = userService.findByUsername(username);
-        System.out.println("Thread ID: " + threadId);
         Thread threadPostedIn = threadService.findThreadById(Long.valueOf(threadId));
         User threadOwner = userService.findByUsername(threadPostedIn.getUsername());
         Comment newComment = new Comment(poster.getUsername(), commentBody, threadPostedIn);
         threadService.addComment(newComment, threadPostedIn);
 
         if (threadOwner != null) {
-            Message message = new Message(poster.getUsername() + " commented on your thread " + threadPostedIn.getHeader(), threadOwner, false);
+            Message message = new Message(poster.getUsername() + " commented on your thread " + threadPostedIn.getHeader(), threadOwner, false, threadOwner.getUsername());
             messageService.save(message);
         }
 
@@ -103,7 +102,6 @@ public class ThreadController {
     @DeleteMapping("/comments/{id}/delete")
     public String deleteComment(@PathVariable("id") String id) {
         try {
-            System.out.println("Comment Id: " + id);
             Comment commentToDelete = commentService.findCommentById(Long.valueOf(id));
             commentService.delete(commentToDelete);
         } catch (Exception e) {

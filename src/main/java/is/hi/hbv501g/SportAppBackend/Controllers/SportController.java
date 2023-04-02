@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 public class SportController {
@@ -34,10 +36,10 @@ public class SportController {
     @RequestMapping(value = "/home/{sport}/clubs/save", method = RequestMethod.POST)
     public String saveClub(Club club, Model model) {
         //takes in object and saves changes
-        System.out.println(club.getSport());
         sportService.saveClub(club);
         return "redirect:/home/{sport}/clubs";
     }
+
 
     @RequestMapping(value = "/home/{sport}/clubs/delete/{id}", method = RequestMethod.GET)
     public String deleteClub(@PathVariable("id") Long id, Model model) {
