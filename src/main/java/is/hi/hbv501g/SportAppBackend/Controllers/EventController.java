@@ -45,12 +45,14 @@ public class EventController {
             @RequestParam String title,
             @RequestParam String description,
             @RequestParam String sport,
-            @RequestParam String startingDate) {
+            @RequestParam String startingDate,
+            @RequestParam String image) {
         Event event = new Event();
         event.setEventName(title);
         event.setEventDescription(description);
         event.setSport(sport);
         event.setEventStartTime(startingDate);
+        event.setImage(image);
         eventService.save(event);
         return event;
     }
