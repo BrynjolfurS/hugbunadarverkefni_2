@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "messages")
-public class Message {
+public class EventMessage {
     private long Id;
     private String message;
 
@@ -51,14 +51,14 @@ public class Message {
         this.message = message;
     }
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sender", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user", nullable = false)
     @JsonBackReference
     public User getSender() {
         return sender;
     }
 
-    public Message(String message, User sender, boolean x, String receiver, String type) {
+    public EventMessage(String message, User sender, boolean x, String receiver, String type) {
         this.message = message;
         this.msgType = type;
         this.sender = sender;
@@ -72,7 +72,7 @@ public class Message {
         this.sender = sender;
     }
 
-    public Message() {
+    public EventMessage() {
         // Required empty public constructor
     }
 

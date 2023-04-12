@@ -22,11 +22,6 @@ public class User {
     
     private String userPassword;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    public List<Message> getMessages() {
-        return messages;
-    }
 
     public void setMessages(List<Message> messages) {
         this.messages = messages;
