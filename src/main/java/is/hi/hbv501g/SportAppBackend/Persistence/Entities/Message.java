@@ -11,10 +11,7 @@ public class Message {
     private long Id;
     private String message;
 
-
-
     private String username;
-
 
     public String getUsername() {
         return user.getUsername();
@@ -23,7 +20,6 @@ public class Message {
     public void setUsername(String username) {
         this.username = username;
     }
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

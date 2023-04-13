@@ -22,24 +22,32 @@ public class User {
     
     private String userPassword;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    public List<Message> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(List<Message> messages) {
-        this.messages = messages;
-    }
-
     private List<Message> messages = new ArrayList<>();
-    private boolean isAdmin;
 
+    private boolean isAdmin;
     public boolean isAdmin() {
         return isAdmin;
     }
 
     private boolean isBanned;
+
+
+    // User profile
+    private String userFullName;
+    private String userEmailAddress;
+
+
+    // Messages
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    public List<Message> getMessages() {
+        return messages;
+    }
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
+    }
+
 
     public boolean isBanned() {
         return isBanned;
@@ -48,7 +56,6 @@ public class User {
     public void setBanned(boolean banned) {
         isBanned = banned;
     }
-
 
     public void setAdmin(boolean admin) {
         isAdmin = admin;
@@ -82,9 +89,13 @@ public class User {
     public User() {
     }
 
-    public String getUsername() {
-        return username;
+    public User(String username, String userPassword, boolean isAdmin) {
+        this.username = username;
+        this.userPassword = userPassword;
+        this.isAdmin = isAdmin;
     }
+
+    // Getters & Setters
 
     @Id
     @Column(name = "UserID")
@@ -94,6 +105,10 @@ public class User {
     }
     public void setID(long id) {
         this.ID = id;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public void setUsername(String username) {
@@ -108,19 +123,6 @@ public class User {
         this.userPassword = userPassword;
     }
 
-    public User(String username, String userPassword, boolean isAdmin) {
-        this.username = username;
-        this.userPassword = userPassword;
-        this.isAdmin = isAdmin;
-    }
-
-//    public User(String username, String userPassword, boolean isAdmin, List<Comment> comments) {
-//        this.username = username;
-//        this.userPassword = userPassword;
-//        this.comments = comments;
-//        this.isAdmin = isAdmin;
-//    }
-
     public boolean getIsAdmin() {
         return isAdmin;
     }
@@ -129,5 +131,19 @@ public class User {
         this.isAdmin = isAdmin;
     }
 
+    public String getUserFullName() {
+        return userFullName;
+    }
 
+    public void setUserFullName(String userFullName) {
+        this.userFullName = userFullName;
+    }
+
+    public String getUserEmailAdress() {
+        return userEmailAddress;
+    }
+
+    public void setUserEmailAdress(String userEmailAdress) {
+        this.userEmailAddress = userEmailAdress;
+    }
 }

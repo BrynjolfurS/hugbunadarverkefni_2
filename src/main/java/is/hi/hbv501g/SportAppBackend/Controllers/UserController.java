@@ -159,6 +159,18 @@ public class UserController {
         return userToUnban;
     }
 
+    @PutMapping("/updateInfo/{username}")
+    public User updateUserInfo(@PathVariable("username") String username,
+                               @RequestParam String userFullName,
+                               @RequestParam String userEmail) {
+//        System.out.println(username + " " + userFullName + " " + userEmail);
+        User userToUpdate = userService.findByUsername(username);
+        userToUpdate.setUserFullName(userFullName);
+        userToUpdate.setUserEmailAdress(userEmail);
+        userService.save(userToUpdate);
+        return userToUpdate;
+    }
+
     @PostMapping("/logout")
     public void logout(String username) {
         User user = userService.findByUsername(username);
