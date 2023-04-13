@@ -194,9 +194,6 @@ public class UserController {
 
     @GetMapping("/userInfo/{username}/moderates/{sport}")
     public boolean getIsModeratorForSport(@PathVariable String username, @PathVariable String sport) {
-        System.out.println(sport);
-        System.out.println(username);
-        System.out.println(sportModeratorService.findSportModeratorByUsernameAndSportName(username, sport));
         return sportModeratorService.findSportModeratorByUsernameAndSportName(username, sport) != null;
     }
 

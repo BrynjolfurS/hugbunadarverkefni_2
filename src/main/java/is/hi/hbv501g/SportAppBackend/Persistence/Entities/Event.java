@@ -22,6 +22,26 @@ public class Event {
     private String eventName;
     private String eventDescription;
 
+    private String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    private boolean inLessThan24Hours;
+
+    public boolean isInLessThan24Hours() {
+        return inLessThan24Hours;
+    }
+
+    public void setInLessThan24Hours(boolean inLessThan24Hours) {
+        this.inLessThan24Hours = inLessThan24Hours;
+    }
+
     private String eventStartTime;
     private LocalDateTime eventDate;
     private String sport;
@@ -35,6 +55,16 @@ public class Event {
         this.eventDate = date;
         DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy MM dd HH:mm");
         this.eventStartTime = date.format(f);
+    }
+
+    public Event(String eventName, String eventDescription ,String sport, LocalDateTime date, String image) {
+        this.eventName = eventName;
+        this.eventDescription = eventDescription;
+        this.sport = sport;
+        this.eventDate = date;
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy MM dd HH:mm");
+        this.eventStartTime = date.format(f);
+        this.image = image;
     }
     //------------------test end-------------------------------
 
@@ -65,14 +95,22 @@ public class Event {
         this.eventDescription = eventDescription;
     }
 
-    public String geteventStartTime() {
-        return eventStartTime;
-    }
-
-    public void seteventStartTime(String eventDate) {
+    public void setEventStartTime(String eventDate) {
         this.eventStartTime = eventDate;
         DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy MM dd HH:mm");
         this.eventDate = LocalDateTime.parse(eventDate, f);
+    }
+
+    public String getEventStartTime() {
+        return eventStartTime;
+    }
+
+    public LocalDateTime getEventDate() {
+        return eventDate;
+    }
+
+    public void setEventDate(LocalDateTime eventDate) {
+        this.eventDate = eventDate;
     }
 
     public String getSport(){return sport;}
