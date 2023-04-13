@@ -166,7 +166,7 @@ public class UserController {
 //        System.out.println(username + " " + userFullName + " " + userEmail);
         User userToUpdate = userService.findByUsername(username);
         userToUpdate.setUserFullName(userFullName);
-        userToUpdate.setUserEmailAdress(userEmail);
+        userToUpdate.setUserEmailAddress(userEmail);
         userService.save(userToUpdate);
         return userToUpdate;
     }

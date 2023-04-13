@@ -39,11 +39,11 @@ public class User {
 
     // Messages
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    public List<Message> getMessages() {
-        return messages;
-    }
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JsonManagedReference
+//    public List<Message> getMessages() {
+//        return messages;
+//    }
 
     public void setMessages(List<Message> messages) {
         this.messages = messages;
@@ -140,11 +140,11 @@ public class User {
         this.userFullName = userFullName;
     }
 
-    public String getUserEmailAdress() {
+    public String getUserEmailAddress() {
         return userEmailAddress;
     }
 
-    public void setUserEmailAdress(String userEmailAdress) {
-        this.userEmailAddress = userEmailAdress;
+    public void setUserEmailAddress(String userEmailAddress) {
+        this.userEmailAddress = userEmailAddress;
     }
 }
