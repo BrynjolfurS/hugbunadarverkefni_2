@@ -133,20 +133,21 @@ public class UserController {
     public User loginPOST(String username, String password) {
         try {
             User user = userService.findByUsername(username);
-            if (user.getUserPassword().equals(password) && !user.isBanned()) {
+            if (user.getUserPassword().equals(password) && !user.getIsBanned()) {
                 user.setLoggedIn(true);
+                return user;
+            } else {
                 return user;
             }
         } catch (Exception e) {
             return null;
         }
-        return null;
     }
 
     @PutMapping("/banUser/{username}")
     public User banUser(@PathVariable("username") String username) {
         User userToBan = userService.findByUsername(username);
-        userToBan.setBanned(true);
+        userToBan.setIsBanned(true);
         userService.save(userToBan);
         return userToBan;
     }
@@ -154,7 +155,7 @@ public class UserController {
     @PutMapping("/unbanUser/{username}")
     public User unbanUser(@PathVariable("username") String username) {
         User userToUnban = userService.findByUsername(username);
-        userToUnban.setBanned(false);
+        userToUnban.setIsBanned(false);
         userService.save(userToUnban);
         return userToUnban;
     }
@@ -200,7 +201,7 @@ public class UserController {
     @GetMapping("/userInfo/{username}/isBanned")
     public boolean isBanned(@PathVariable String username) {
         User user = userService.findByUsername(username);
-        return user.isBanned();
+        return user.getIsBanned();
     }
 
     @PostMapping("/checkUsername")

@@ -50,11 +50,11 @@ public class User {
     }
 
 
-    public boolean isBanned() {
+    public boolean getIsBanned() {
         return isBanned;
     }
 
-    public void setBanned(boolean banned) {
+    public void setIsBanned(boolean banned) {
         isBanned = banned;
     }
 
