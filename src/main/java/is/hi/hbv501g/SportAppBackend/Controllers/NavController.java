@@ -29,6 +29,7 @@ public class NavController {
     private final ThreadService threadService;
     private final UserService userService;
     private final MessageService messageService;
+    private final SportModeratorService sportModeratorService;
 
     // Return single thread by id from thread service and return json data
     @RequestMapping(value = "/home/{sport}/thread/{id}", method = RequestMethod.GET)
@@ -37,11 +38,12 @@ public class NavController {
     }
 
     @Autowired
-    public NavController(SportService sportService, ThreadService threadService, UserService userService, MessageService messageService) {
+    public NavController(SportService sportService, ThreadService threadService, UserService userService, MessageService messageService, SportModeratorService sportModeratorService) {
         this.sportService = sportService;
         this.threadService = threadService;
         this.userService = userService;
         this.messageService = messageService;
+        this.sportModeratorService = sportModeratorService;
         CreateDummyData();
     }
 
@@ -176,6 +178,10 @@ public class NavController {
         User admin = new User("admin","admin",true);
         userService.save(new User("notAdmin","notAdmin",false));
         userService.save(admin);
+
+        SportModerator sm = new SportModerator("badminton", "notAdmin");
+        sportModeratorService.save(sm);
+
         Thread tips1 = new Thread("admin", "Beginner tips & FAQ", "Here are some useful tips..", "badminton");
         Thread tips2 = new Thread("admin", "Beginner tips & FAQ", "Here are some useful tips..", "pilukast");
         Thread tips3 = new Thread("admin", "Beginner tips & FAQ", "Here are some useful tips..", "Extreme Ironing");

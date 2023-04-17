@@ -20,7 +20,7 @@ public class SportModeratorServiceImplementation implements SportModeratorServic
 
     @Override
     public SportModerator save(SportModerator sportModerator) {
-        return null;
+        return sportModeratorRepository.save(sportModerator);
     }
 
     @Override

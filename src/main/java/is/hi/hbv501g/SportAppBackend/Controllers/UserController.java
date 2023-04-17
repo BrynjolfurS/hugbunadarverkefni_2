@@ -209,6 +209,15 @@ public class UserController {
         return userService.findByUsername(username) != null;
     }
 
+    @PostMapping("/userInfo/{username}/makeModerator")
+    public boolean makeMod(@PathVariable String username, @RequestParam String sport) {
+        SportModerator sportModerator = new SportModerator();
+        sportModerator.setUsername(username);
+        sportModerator.setSportName(sport);
+        sportModeratorService.save(sportModerator);
+        return sportModeratorService.save(sportModerator) != null;
+    }
+
     @PostMapping("/register")
     public User register(@RequestParam String username, @RequestParam String password) {
         User user = new User(username, password, false);
