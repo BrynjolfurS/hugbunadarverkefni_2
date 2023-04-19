@@ -27,13 +27,11 @@ public class EventChecker {
         List<Event> events = eventRepository.findAll();
 
         for (Event event : events) {
-            System.out.println(event.getEventDate());
             // if event is in less than 24 hours
             if (event.getEventDate().isAfter(LocalDateTime.now().minus(24, ChronoUnit.HOURS))) {
                 event.setInLessThan24Hours(true);
                 eventRepository.save(event);
             }
         }
-        System.out.println("Checking for new events...");
     }
 }

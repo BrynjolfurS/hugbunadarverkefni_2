@@ -68,16 +68,20 @@ public class ThreadController {
     // TODO: Finna útfrá threadId hver postaði þræðinum og setja það í message
     @PostMapping("/newComment")
     public String addComment(@RequestParam String username, @RequestParam String commentBody, @RequestParam String threadId) {
+        System.out.println(username);
+        System.out.println(commentBody);
+        System.out.println(threadId);
         User poster = userService.findByUsername(username);
         Thread threadPostedIn = threadService.findThreadById(Long.valueOf(threadId));
         User threadOwner = userService.findByUsername(threadPostedIn.getUsername());
         Comment newComment = new Comment(poster.getUsername(), commentBody, threadPostedIn);
         threadService.addComment(newComment, threadPostedIn);
 
+        /*
         if (threadOwner != null) {
             Message message = new Message(poster.getUsername() + " commented on your thread " + threadPostedIn.getHeader(), threadOwner, false, threadOwner.getUsername(), "new_comment");
             messageService.save(message);
-        }
+        }*/
 
         return "Comment successfully posted!";
     }
@@ -90,6 +94,7 @@ public class ThreadController {
         message.setX(true);
         messageService.save(message);
     }
+
 
     @GetMapping("/userInfo/{username}/messages")
     public List<Message> getMessages(@PathVariable String username) {
