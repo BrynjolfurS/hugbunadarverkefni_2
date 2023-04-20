@@ -1,7 +1,8 @@
 package is.hi.hbv501g.SportAppBackend.Persistence.Entities;
 
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -15,12 +16,15 @@ import java.util.List;
  */
 @Entity
 @Table(name = "threads")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class Thread implements Comparable<Thread> {
-    private long ID;
+    private long id;
     private String username;
     private boolean isPinned = false;
-    @JsonManagedReference
-    private List<Comment> comments = new ArrayList<>();
+    private ArrayList<Comment> comments = new ArrayList<>();
     private String header;
     private String body;
     private LocalDate date;
@@ -45,13 +49,12 @@ public class Thread implements Comparable<Thread> {
         this.date = LocalDate.now();
     }
     @Id
-    @Column(name = "threadId")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    public long getID() {
-        return ID;
+    public long getId() {
+        return id;
     }
-    public void setID(long id) {
-        this.ID = id;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getUser() {
@@ -70,14 +73,24 @@ public class Thread implements Comparable<Thread> {
         isPinned = pinned;
     }
 
-    @OneToMany(mappedBy = "thread", cascade = CascadeType.ALL, orphanRemoval = true)
+    // VIRKAR ÞEGAR ORPHAN REMOVAL ER TEKIÐ BURT!!!!??
+    @OneToMany(targetEntity = Comment.class, mappedBy = "thread", cascade = CascadeType.ALL)
     public List<Comment> getComments() {
-        if (comments != null) return comments;
-        return new ArrayList<>();
+        return comments;
     }
 
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
+    public void addComment(Comment comment) {
+        List<Comment> newComments = new ArrayList<>();
+        newComments.add(comment);
+        this.comments.clear();
+        this.comments.addAll(newComments);
+        comment.setThread(this);
+    }
+
+    public void setComments(List<Comment> newComments) {
+        this.comments.clear();
+        this.comments.addAll(newComments);
+        this.comments.forEach(comment -> comment.setThread(this));
     }
 
     public int NumberOfComments() {

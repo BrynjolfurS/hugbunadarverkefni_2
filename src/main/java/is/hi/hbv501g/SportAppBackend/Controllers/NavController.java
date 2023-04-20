@@ -27,6 +27,7 @@ public class NavController {
 
     private final SportService sportService;
     private final ThreadService threadService;
+    private final CommentService commentService;
     private final UserService userService;
     private final MessageService messageService;
     private final SportModeratorService sportModeratorService;
@@ -38,9 +39,10 @@ public class NavController {
     }
 
     @Autowired
-    public NavController(SportService sportService, ThreadService threadService, UserService userService, MessageService messageService, SportModeratorService sportModeratorService) {
+    public NavController(SportService sportService, ThreadService threadService, CommentService commentService, UserService userService, MessageService messageService, SportModeratorService sportModeratorService) {
         this.sportService = sportService;
         this.threadService = threadService;
+        this.commentService = commentService;
         this.userService = userService;
         this.messageService = messageService;
         this.sportModeratorService = sportModeratorService;
@@ -175,53 +177,61 @@ public class NavController {
     }
 
     public void CreateDummyData() {
-        User admin = new User("admin","admin",true);
-        userService.save(new User("notAdmin","notAdmin",false));
-        userService.save(admin);
+        User user = userService.findByUsername("admin");
+        if (user == null) {
+            User admin = new User("admin","admin",true);
+            userService.save(new User("notAdmin","notAdmin",false));
+            userService.save(admin);
 
-        SportModerator sm = new SportModerator("badminton", "notAdmin");
-        sportModeratorService.save(sm);
+            SportModerator sm = new SportModerator("badminton", "notAdmin");
+            sportModeratorService.save(sm);
 
-        Thread tips1 = new Thread("admin", "Beginner tips & FAQ", "Here are some useful tips..", "badminton");
-        Thread tips2 = new Thread("admin", "Beginner tips & FAQ", "Here are some useful tips..", "pilukast");
-        Thread tips3 = new Thread("admin", "Beginner tips & FAQ", "Here are some useful tips..", "Extreme Ironing");
-        tips1.setPinned(true);
-        tips2.setPinned(true);
-        tips3.setPinned(true);
-        Comment comment = new Comment("admin", "Þetta er flottur þráður!", tips1);
-        threadService.addComment(comment,tips1);
-        threadService.save(tips1);
-        threadService.save(tips2);
-        threadService.save(tips3);
+            Thread tips1 = new Thread("admin", "Beginner tips & FAQ", "Here are some useful tips..", "badminton");
+            Thread tips2 = new Thread("admin", "Beginner tips & FAQ", "Here are some useful tips..", "pilukast");
+            Thread tips3 = new Thread("admin", "Beginner tips & FAQ", "Here are some useful tips..", "Extreme Ironing");
+            tips1.setPinned(true);
+            tips2.setPinned(true);
+            tips3.setPinned(true);
+            Comment comment = new Comment("admin", "Þetta er flottur þráður!", tips1);
+            Comment comment2 = new Comment("Joi", "Klárlega!", tips1);
+            tips1.addComment(comment);
+            tips1.addComment(comment2);
+//        threadService.addComment(comment,tips1);
+//        threadService.addComment(comment2, tips1);
+            threadService.save(tips1);
+            threadService.save(tips2);
+            threadService.save(tips3);
+            commentService.save(comment);
+            commentService.save(comment2);
 
-        for (int i = 0; i < 10; i++) {
-            threadService.save(new Thread("admin", "Dummy Thread " + i, "Dummy Body", "badminton"));
-            threadService.save(new Thread("admin", "Dummy Thread " + i, "Dummy Body", "pilukast"));
-            threadService.save(new Thread("admin", "Dummy Thread " + i, "Dummy Body", "Extreme Ironing"));
-            sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "badminton", LocalDateTime.of(2022,Month.of(i+1),1+i*2,i+2,i+10)));
-            sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "pilukast", LocalDateTime.of(2022,Month.of(i+1),1+i*2,i+1,i+20)));
-            sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "Extreme Ironing", LocalDateTime.of(2022,Month.of(i+1),1+i*2,i+3,i+30)));
-            sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "bogfimi", LocalDateTime.of(2022,Month.of(i+1),1+i*2,i+6,i+15)));
+            for (int i = 0; i < 10; i++) {
+                threadService.save(new Thread("admin", "Dummy Thread " + i, "Dummy Body", "badminton"));
+                threadService.save(new Thread("admin", "Dummy Thread " + i, "Dummy Body", "pilukast"));
+                threadService.save(new Thread("admin", "Dummy Thread " + i, "Dummy Body", "Extreme Ironing"));
+                sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "badminton", LocalDateTime.of(2022,Month.of(i+1),1+i*2,i+2,i+10)));
+                sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "pilukast", LocalDateTime.of(2022,Month.of(i+1),1+i*2,i+1,i+20)));
+                sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "Extreme Ironing", LocalDateTime.of(2022,Month.of(i+1),1+i*2,i+3,i+30)));
+                sportService.saveEvent(new Event("Dummy Event " + i, "Dummy Description", "bogfimi", LocalDateTime.of(2022,Month.of(i+1),1+i*2,i+6,i+15)));
+            }
+            sportService.saveClub(new Club("Badmintonfélag Hafnarfjarðar", "https://www.badmintonfelag.is/", "bh@bhbadminton.is",
+                    "Strandgötu 53, 220 Hafnarfirði",
+                    "Badmintonfélag Hafnarfjarðar var stofnað 7.október 1959. " +
+                            "Félagið hefur aðsetur í Íþróttahúsinu við Strandgötu í Hafnarfirði þar sem æfingar í badminton og borðtennis fara fram. " +
+                            "Einnig er hægt að iðka tennis hjá Badmintonfélagi Hafnarfjarðar en æfingar í tennis fara fram í Tennishöllinn í Kópavogi. " +
+                            "Boðið er uppá æfingar fyrir börn frá 5 ára aldri. Upplýsingar um badminton og borðtennis má finna á vefnum badmintonfelag.is " +
+                            "en upplýsingar um tennis hjá Tennishöllinni í Kópavogi.", "badminton"));
+
+            sportService.saveClub(new Club("Pilukastfélag Hafnarfjarðar", "https://www.pilukastfelag.is/", "bh@bhpilukast.is",
+                    "Strandgötu 53, 220 Hafnarfirði", "Pilukastfélag Hafnarfjarðar var stofnað 7.október 1959.", "pilukast"));
+
+            sportService.saveClub(new Club("Bogfimifélag Hafnarfjarðar", "https://www.bogfimifelag.is/", "bh@bhbogfimi.is",
+                    "Álfheimum 53, 104 Reykjavík", "Bogfimifélag Reykjavíkur var stofnað 2.janúar 1995.", "bogfimi"));
+
+            sportService.saveClub(new Club("Pilukastfélag Reykjavíkur", "https://www.pilukastfelagrvk.is/", "rvk@rvkpilukast.is",
+                    "Lágmúla 2, 105 Reykjavík", "Pilukastfélag Reykjavíkur var stofnað 1.desember 1923.", "pilukast"));
+
+            sportService.saveClub(new Club("Staujararnir", "https://www.straujararnir.is/", "bh@straujararnir.is",
+                    "Hamragorg 17, 200 Kópavogi", "Straujararnir voru stofnaðir 15.maí 2005.", "Extreme Ironing"));
         }
-        sportService.saveClub(new Club("Badmintonfélag Hafnarfjarðar", "https://www.badmintonfelag.is/", "bh@bhbadminton.is",
-                "Strandgötu 53, 220 Hafnarfirði",
-                "Badmintonfélag Hafnarfjarðar var stofnað 7.október 1959. " +
-                        "Félagið hefur aðsetur í Íþróttahúsinu við Strandgötu í Hafnarfirði þar sem æfingar í badminton og borðtennis fara fram. " +
-                        "Einnig er hægt að iðka tennis hjá Badmintonfélagi Hafnarfjarðar en æfingar í tennis fara fram í Tennishöllinn í Kópavogi. " +
-                        "Boðið er uppá æfingar fyrir börn frá 5 ára aldri. Upplýsingar um badminton og borðtennis má finna á vefnum badmintonfelag.is " +
-                        "en upplýsingar um tennis hjá Tennishöllinni í Kópavogi.", "badminton"));
-
-        sportService.saveClub(new Club("Pilukastfélag Hafnarfjarðar", "https://www.pilukastfelag.is/", "bh@bhpilukast.is",
-                "Strandgötu 53, 220 Hafnarfirði", "Pilukastfélag Hafnarfjarðar var stofnað 7.október 1959.", "pilukast"));
-
-        sportService.saveClub(new Club("Bogfimifélag Hafnarfjarðar", "https://www.bogfimifelag.is/", "bh@bhbogfimi.is",
-                "Álfheimum 53, 104 Reykjavík", "Bogfimifélag Reykjavíkur var stofnað 2.janúar 1995.", "bogfimi"));
-
-        sportService.saveClub(new Club("Pilukastfélag Reykjavíkur", "https://www.pilukastfelagrvk.is/", "rvk@rvkpilukast.is",
-                "Lágmúla 2, 105 Reykjavík", "Pilukastfélag Reykjavíkur var stofnað 1.desember 1923.", "pilukast"));
-
-        sportService.saveClub(new Club("Staujararnir", "https://www.straujararnir.is/", "bh@straujararnir.is",
-                "Hamragorg 17, 200 Kópavogi", "Straujararnir voru stofnaðir 15.maí 2005.", "Extreme Ironing"));
-
     }
 }

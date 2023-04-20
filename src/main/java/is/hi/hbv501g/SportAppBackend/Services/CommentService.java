@@ -10,4 +10,6 @@ public interface CommentService {
     public List<Comment> findAllComments();
     public void delete(Comment comment);
     public Comment findCommentById(Long id);
+    List<Comment> findCommentsByThreadId(long id);
+    Comment save(Comment comment);
 }
