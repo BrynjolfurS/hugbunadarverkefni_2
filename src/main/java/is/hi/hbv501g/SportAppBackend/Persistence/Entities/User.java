@@ -71,6 +71,9 @@ public class User {
         this.comments = comments;
     }*/
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Event> subscribedEvents = new ArrayList<>();
+
 
     public boolean isLoggedIn() {
         return loggedIn;

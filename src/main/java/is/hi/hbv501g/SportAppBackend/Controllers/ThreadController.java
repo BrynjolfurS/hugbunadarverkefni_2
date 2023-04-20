@@ -90,7 +90,7 @@ public class ThreadController {
     @PutMapping("userInfo/{username}/messages/{id}")
     public void updateMessage(@PathVariable String username, @PathVariable Long id) {
         Message message = messageService.findById(id);
-        message.setX(true);
+        message.setX(true); // X -> Message been read
         messageService.save(message);
     }
 

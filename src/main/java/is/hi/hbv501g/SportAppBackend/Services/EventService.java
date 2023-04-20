@@ -1,6 +1,7 @@
 package is.hi.hbv501g.SportAppBackend.Services;
 
 import is.hi.hbv501g.SportAppBackend.Persistence.Entities.Event;
+import is.hi.hbv501g.SportAppBackend.Persistence.Entities.User;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public interface EventService {
     public Event save(Event event);
     public Event findEventById(Long id);
     public List<Event> findAll();
-    public List<Event> findBySport(String sport);
+    public List<Event> findBySport(String sport);;
     public void delete(Long id);
+    public List<Event> findByUser(User user);
 }
