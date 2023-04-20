@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,7 +46,24 @@ public class Event {
     private String eventStartTime;
     private LocalDateTime eventDate;
     private String sport;
-//    private List<User> subscribers = new List<User>();
+
+    public List<User> getSubscribers() {
+        return subscribers;
+    }
+
+    public void setSubscribers(List<User> subscribers) {
+        this.subscribers = subscribers;
+    }
+
+    public void addSubscriber(User user) {
+        if (subscribers == null) {
+            subscribers = new ArrayList<>();
+        }
+        subscribers.add(user);
+    }
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<User> subscribers = new ArrayList<>();
 
     //------------------test-------------------------------
     public Event(String eventName, String eventDescription ,String sport, LocalDateTime date) {

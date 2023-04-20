@@ -1,8 +1,10 @@
 package is.hi.hbv501g.SportAppBackend.Controllers;
 
 import is.hi.hbv501g.SportAppBackend.Persistence.Entities.Event;
+import is.hi.hbv501g.SportAppBackend.Persistence.Entities.User;
 import is.hi.hbv501g.SportAppBackend.Services.EventService;
 import is.hi.hbv501g.SportAppBackend.Services.SportService;
+import is.hi.hbv501g.SportAppBackend.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,11 +24,13 @@ public class EventController {
 
     private final EventService eventService;
     private final SportService sportService;
+    private final UserService userService;
 
     @Autowired
-    public EventController(EventService eventService, SportService sportService) {
+    public EventController(EventService eventService, SportService sportService, UserService userService) {
         this.eventService = eventService;
         this.sportService = sportService;
+        this.userService = userService;
     }
 
     @RequestMapping(value = "/event/{id}", method = RequestMethod.GET)
@@ -57,13 +61,20 @@ public class EventController {
         return event;
     }
 
-//    @PostMapping("/event/{id}")
-//    public String subscribeToEvent(@PathVariable("id") Long id, @RequestParam Long userId) {
-//        Event event = eventService.findEventById(id);
-//        event.addSubscriber(userId);
-//        eventService.save(event);
-//        return "Successfully subscribed to event!";
-//    }
+    @PostMapping("/event/{id}")
+    public String subscribeToEvent(@PathVariable("id") Long id, @RequestParam Long userId) {
+        Event event = eventService.findEventById(id);
+        User user = userService.findByID(userId);
+        event.addSubscriber(user);
+        eventService.save(event);
+        return "Successfully subscribed to event!";
+    }
+
+    @GetMapping("/userInfo/{userId}/myEvents")
+    public List<Event> getMyEvents(@PathVariable String userId) {
+        User user = userService.findByID(Long.parseLong(userId));
+        return eventService.findByUser(user);
+    }
 
     @RequestMapping(value = "/home/{sport}/events", method = RequestMethod.GET)
     public List<Event> goToEvents(@PathVariable("sport") String sport, Model model) {
