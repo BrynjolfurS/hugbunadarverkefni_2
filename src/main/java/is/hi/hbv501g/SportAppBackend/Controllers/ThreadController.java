@@ -4,13 +4,11 @@ import is.hi.hbv501g.SportAppBackend.Persistence.Entities.*;
 import is.hi.hbv501g.SportAppBackend.Persistence.Entities.Thread;
 import is.hi.hbv501g.SportAppBackend.Services.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -31,11 +29,6 @@ public class ThreadController {
         this.messageService = messageService;
     }
 
-//    @GetMapping("/home/{sport}/thread/{id}")
-//    public Thread getThreadById(@PathVariable Long id) {
-//        return threadService.findThreadById(id);
-//    }
-//
     @GetMapping("/thread/{id}")
     public Thread getThreadById(@PathVariable Long id) {
         Thread thread = threadService.findThreadById(id);
@@ -68,14 +61,20 @@ public class ThreadController {
     // TODO: Finna útfrá threadId hver postaði þræðinum og setja það í message
     @PostMapping("/newComment")
     public String addComment(@RequestParam String username, @RequestParam String commentBody, @RequestParam String threadId) {
-        System.out.println(username);
-        System.out.println(commentBody);
-        System.out.println(threadId);
+//        System.out.println(username);
+//        System.out.println(commentBody);
+//        System.out.println(threadId);
         User poster = userService.findByUsername(username);
         Thread threadPostedIn = threadService.findThreadById(Long.valueOf(threadId));
-        User threadOwner = userService.findByUsername(threadPostedIn.getUsername());
+//        User threadOwner = userService.findByUsername(threadPostedIn.getUsername());
         Comment newComment = new Comment(poster.getUsername(), commentBody, threadPostedIn);
-        threadService.addComment(newComment, threadPostedIn);
+
+
+
+
+        threadPostedIn.addComment(newComment);
+//        threadService.save(threadPostedIn);
+        commentService.save(newComment);
 
         /*
         if (threadOwner != null) {
@@ -106,10 +105,19 @@ public class ThreadController {
         return null;
     }
 
+    @GetMapping("/comments/{id}")
+    public List<Comment> getCommentsByThreadId(@PathVariable long id) {
+        Thread thread = threadService.findThreadById(id);
+        List<Comment> comments = thread.getComments();
+        comments.forEach(comment -> System.out.println("Comment id: " + comment.getID()));
+        return comments;
+    }
+
     @DeleteMapping("/comments/{id}/delete")
     public String deleteComment(@PathVariable("id") String id) {
         try {
             Comment commentToDelete = commentService.findCommentById(Long.valueOf(id));
+            System.out.print("Deleting comment: id - " +commentToDelete.getID() + " comment - " + commentToDelete.getComment());
             commentService.delete(commentToDelete);
         } catch (Exception e) {
             System.out.println("Error deleting comment: " + e.getMessage());
@@ -123,17 +131,19 @@ public class ThreadController {
         User sessionUser = (User) session.getAttribute("LoggedInUser");
         Thread thread;
         if (sessionUser == null) {
-            thread = threadService.save(new Thread("anonymous", header, body, sport));
+//            thread = threadService.save(new Thread("anonymous", header, body, sport));
+            return "redirect:/home/{sport}";
         }
         else {
-            thread = threadService.save(new Thread(sessionUser.getUsername(), header, body, sport));
+            thread = new Thread(sessionUser.getUsername(), header, body, sport);
+            threadService.save(thread);
         }
         if (pinned != null) {
             thread.setPinned(true);
-            thread = threadService.save(thread);
+            threadService.save(thread);
         }
 
-        Long id = thread.getID();
+        Long id = thread.getId();
         return "redirect:/home/{sport}/thread/"+id;
     }
 
@@ -175,30 +185,4 @@ public class ThreadController {
         return "redirect:/home/{sport}";
     }
 
-    // Má henda? Dummydata búið til í NavController
-    public void createDummyData() {
-        if (dummyTeljari <= 0) {
-            User admin = new User("admin","admin",true);
-            userService.save(admin);
-            Thread tips1 = new Thread("Íþróttasíða", "Beginner tips & FAQ", "Here are some useful tips..", "badminton");
-            Thread tips2 = new Thread("Íþróttasíða", "Beginner tips & FAQ", "Here are some useful tips..", "pilukast");
-            Thread tips3 = new Thread("Íþróttasíða", "Beginner tips & FAQ", "Here are some useful tips..", "Extreme Ironing");
-            Comment comment = new Comment("admin", "Þetta er flottur þráður!", tips1);
-            threadService.addComment(comment,tips1);
-            tips1.setPinned(true);
-            tips2.setPinned(true);
-            tips3.setPinned(true);
-            threadService.save(tips1);
-            threadService.save(tips2);
-            threadService.save(tips3);
-
-            for (int i = 0; i < 10; i++) {
-                threadService.save(new Thread("Jon", "Dummy Thread " + i, "Dummy Body", "badminton"));
-                threadService.save(new Thread("Palli", "Dummy Thread " + i, "Dummy Body", "pilukast"));
-                threadService.save(new Thread("Ragnar", "Dummy Thread " + i, "Dummy Body", "Extreme Ironing"));
-
-            }
-            dummyTeljari++;
-        }
-    }
 }

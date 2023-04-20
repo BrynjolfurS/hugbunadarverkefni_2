@@ -2,6 +2,9 @@ package is.hi.hbv501g.SportAppBackend.Persistence.Entities;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -13,6 +16,10 @@ import java.time.format.DateTimeFormatter;
  */
 @Entity
 @Table(name = "comments")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class Comment {
     private long ID;
 
@@ -26,8 +33,6 @@ public class Comment {
      */
     @Column(columnDefinition="LONGVARCHAR")
     private String comment;
-
-    @JsonBackReference
     private Thread thread; // Thread ID Betra? Dno
 
     public Comment() {
@@ -44,7 +49,6 @@ public class Comment {
     }
 
     @Id
-    @Column(name = "CommentId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long getID() {
         return ID;
@@ -61,30 +65,11 @@ public class Comment {
         this.userName = userName;
     }
 
-    // TODO: Skoða betur bidirectional relation ef comment á að vísa í user object
-//    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-//    @JoinColumn(name = "UserID")
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
-
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @JoinColumn(name = "ThreadID")
+    // fetch = FetchType.LAZY ??
+    @ManyToOne(targetEntity = Thread.class, fetch = FetchType.LAZY)
     public Thread getThread() {return thread;}
 
     public void setThread(Thread thread) {this.thread = thread;}
-
-//    public LocalDate getDateCommented() {
-//        return dateCommented;
-//    }
-//
-//    public void setDateCommented(LocalDate dateCommented) {
-//        this.dateCommented = dateCommented;
-//    }
 
     public String getTimeCommented() {
         return timeCommented;

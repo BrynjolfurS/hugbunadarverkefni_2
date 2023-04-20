@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ThreadService {
     public void addComment(Comment comment, Thread thread);
-    public Thread save(Thread thread);
+    public void save(Thread thread);
     public List<Thread> findAllThreadsBySport(String Sport);
     public List<Thread> findAllThreads();
     public List<Thread> sortThreads();

@@ -21,13 +21,15 @@ public class ThreadServiceImplementation implements ThreadService {
 
     @Override
     public void addComment(Comment comment, Thread thread) {
-        threadRepository.save(comment);
-        threadRepository.save(thread);
+//        List<Comment> newComment = new ArrayList<>();
+//        newComment.add(comment);
+//        thread.setComments(newComment);
+        thread.addComment(comment);
     }
 
     @Override
-    public Thread save(Thread thread) {
-        return threadRepository.save(thread);
+    public void save(Thread thread) {
+        threadRepository.save(thread);
     }
 
     @Override
@@ -54,11 +56,11 @@ public class ThreadServiceImplementation implements ThreadService {
     public void deleteComment(Comment comment) {
 
     }
-
     @Override
     public Thread findThreadById(Long id) {
-        return  threadRepository.findByID(id);
+        return  threadRepository.findByid(id);
     }
+
 
     @Override
     public List<Thread> findAllThreads() {

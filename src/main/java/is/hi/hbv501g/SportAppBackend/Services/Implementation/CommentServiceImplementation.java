@@ -36,4 +36,13 @@ public class CommentServiceImplementation implements CommentService {
     public Comment findCommentById(Long id) {
         return commentRepository.findCommentByID(id);
     }
+
+    @Override
+    public List<Comment> findCommentsByThreadId(long id) {
+        return commentRepository.findCommentsByThread(id);
+    }
+    @Override
+    public Comment save(Comment comment) {
+        return commentRepository.save(comment);
+    }
 }

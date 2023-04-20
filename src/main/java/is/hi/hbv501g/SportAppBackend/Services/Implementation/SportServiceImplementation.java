@@ -47,12 +47,15 @@ public class SportServiceImplementation implements SportService {
     }
 
     @Override
+    public Club getClubById(Long id) { return clubRepository.findByID(id);}
+
+    @Override
     public Club saveClub(Club club) {
         return clubRepository.save(club);
     }
 
     @Override
-    public void deletClubById(long id) {
+    public void deleteClubById(long id) {
         clubRepository.delete(clubRepository.findByID(id));
     }
     //------------------------CLUB END----------------------------------------------
